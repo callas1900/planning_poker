@@ -3,6 +3,7 @@ node_modules/
 dist/*.js*
 npm-debug.log
 yarn-error.log
+src/firebase/init.js
 
 # Editor directories and files
 .idea
