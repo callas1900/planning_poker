@@ -13,12 +13,6 @@ export default {
   data() {
     return {};
   },
-  mounted() {
-    console.log(this.$database);
-    this.$database.once('value').then(function(dataSnapShot) {
-      console.log(dataSnapShot);
-    })
-  }
 };
 </script>
 
