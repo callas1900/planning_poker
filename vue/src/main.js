@@ -41,7 +41,7 @@ const router = new Router({
 })
 
 const { firebaseConfig } = require('./firebase/init.js');
-const database = Firebase.initializeApp(firebaseConfig).database().ref();
+const database = Firebase.initializeApp(firebaseConfig).database();
 Vue.prototype.$database = database;
 
 new Vue({
