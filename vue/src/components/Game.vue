@@ -1,15 +1,14 @@
 <template>
   <div>
-    <h1>PLANNING POKER</h1>
-    <router-link :to="{name: 'make'}"><h2>making new planning session</h2></router-link>
-    <router-link :to="{name: 'join'}"><h2>join a planning session</h2></router-link>
+    <h1>GAME</h1>
   </div>
 </template>
 
 
 <script>
 export default {
-  name: "home",
+  props:['code'],
+  name: "game",
   data() {
     return {};
   },
