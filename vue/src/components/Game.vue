@@ -17,7 +17,7 @@
       v-on:click="updateScores(number)"
     />
     <hr />
-    <div id="result" v-if="waits.length == 0">
+    <div id="result" v-if="waits.length == 0 && scores">
       <h2>result</h2>
       <li v-for="(r, index) in result">{{r[1]}}{{r[2]}}</li>
     </div>
@@ -42,14 +42,11 @@ export default {
       owner: null,
       number: null,
       members: [],
-      scores: null,
-      waits: [],
-      dones: []
+      scores: null
     };
   },
   computed: {
     result: function() {
-      console.log("----------");
       if (this.waits.length != 0 || !this.scores || this.scores === undefined) {
         return [];
       }
@@ -63,12 +60,29 @@ export default {
         }
         return 0;
       });
-      for(const i in result) {
+      for (const i in result) {
         let name = this.members[result[i][0]];
         result[i].push(name);
       }
-      console.log(result);
       return result;
+    },
+    waits: function() {
+      if (!this.scores) {
+        return this.members;
+      }
+      let ids = this.getIds(this.scores);
+      return this.members.filter(function(v, i) {
+        return !ids.includes(i);
+      });
+    },
+    dones: function() {
+      if (!this.scores) {
+        return [];
+      }
+      let ids = this.getIds(this.scores);
+      return this.members.filter(function(v, i) {
+        return ids.includes(i);
+      });
     }
   },
   mounted() {
@@ -89,20 +103,9 @@ export default {
       this.$database.ref("/plans/" + this.code + "/scores/").on(
         "value",
         function(snapshot) {
-          console.log(snapshot.val());
           let scores = snapshot.val();
           if (scores && scores !== undefined) {
             that.scores = scores;
-            // update waits and dones FIXME:
-            let dones = [];
-            for (const i in scores) {
-              let id = scores[i][0];
-              dones.push(that.members[id]);
-            }
-            that.dones = dones;
-            that.waits = that.members.filter(function(mem) {
-              return !dones.includes(mem);
-            });
           }
         },
         that
@@ -113,7 +116,6 @@ export default {
       this.$database.ref("/plans/" + this.code + "/members/").on(
         "value",
         function(snapshot) {
-          console.log(snapshot.val());
           let members = snapshot.val();
           if (members && members !== undefined) {
             for (const i in members) {
@@ -138,7 +140,14 @@ export default {
           let owner = session && session.owner && session.owner[0];
           that.owner = owner;
         }, that);
-    }
+    },
+    getIds: function(scores) {
+      let ids = [];
+      for (const score of scores) {
+        ids.push(Number(score[0]));
+      }
+      return ids;
+    },
   }
 };
 </script>
