@@ -5,7 +5,7 @@
     name:
     <input type="text" v-model="name" placeholder="type your name" />
     <input type="button" value="join!" v-on:click="join(code)" v-if="code && name" />
-    <router-link :to="{name: 'game', params: { code: code}}" v-if="found">
+    <router-link :to="{name: 'game', params: { code: code, player: name}}" v-if="found">
       <h2>Go the session</h2>
     </router-link>
     <h2>{{message}}</h2>

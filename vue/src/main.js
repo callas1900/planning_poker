@@ -27,7 +27,7 @@ const router = new Router({
       component: Join,
     },
     {
-      path: '/game/:code',
+      path: '/game/:code/:player',
       name: 'game',
       component: Game,
       props: true,
