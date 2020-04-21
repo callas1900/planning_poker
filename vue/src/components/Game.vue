@@ -10,15 +10,23 @@
     <li v-for="(member, index) in members">{{member}}</li>
     <hr />select your number :
     <input type="number" v-model="number" />
-    <input v-if="!dones.includes(player)" type="button" value="attack!" v-on:click="updateScores(number)" />
+    <input
+      v-if="!dones.includes(player)"
+      type="button"
+      value="attack!"
+      v-on:click="updateScores(number)"
+    />
     <hr />
-    <div id="in_game">
+    <div id="result" v-if="waits.length == 0">
+      <h2>result</h2>
+      <li v-for="(r, index) in result">{{r[1]}}{{r[2]}}</li>
+    </div>
+    <div id="in_game" v-else>
       <h2>waiting</h2>
       <li v-for="(w, index) in waits">{{w}}</li>
       <h2>decided</h2>
       <li v-for="(d, index) in dones">{{d}}</li>
     </div>
-    <div id="result"></div>
   </div>
 </template>
 
@@ -38,6 +46,30 @@ export default {
       waits: [],
       dones: []
     };
+  },
+  computed: {
+    result: function() {
+      console.log("----------");
+      if (this.waits.length != 0 || !this.scores || this.scores === undefined) {
+        return [];
+      }
+      let result = Array.from(this.scores);
+      result.sort(function(a, b) {
+        if (a[1] < b[1]) {
+          return -1;
+        }
+        if (a[1] > b[1]) {
+          return 1;
+        }
+        return 0;
+      });
+      for(const i in result) {
+        let name = this.members[result[i][0]];
+        result[i].push(name);
+      }
+      console.log(result);
+      return result;
+    }
   },
   mounted() {
     this.getOwner(this.code);
@@ -62,15 +94,15 @@ export default {
           if (scores && scores !== undefined) {
             that.scores = scores;
             // update waits and dones FIXME:
-            let waits = Array.from(that.members);
             let dones = [];
             for (const i in scores) {
               let id = scores[i][0];
-              dones.push(waits[id]);
-              waits.splice(id, 1);
+              dones.push(that.members[id]);
             }
             that.dones = dones;
-            that.waits = waits;
+            that.waits = that.members.filter(function(mem) {
+              return !dones.includes(mem);
+            });
           }
         },
         that

@@ -35,7 +35,7 @@ export default {
           let owner = session && session.owner && session.owner[0];
           let isMembers = session.members && session.members !== undefined;
           let isSameMemeber = isMembers && session.members.includes(that.name);
-          if (owner && isMembers && !isSameMemeber) {
+          if (owner && !isSameMemeber) {
             console.log("achived");
             that.register(session, that);
             that.found = true;
