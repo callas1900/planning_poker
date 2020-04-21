@@ -1,31 +1,51 @@
 <template>
   <div>
-    <h1>GAME</h1>your name is
-    <b>{{player}}</b>
-    your id is
-    <b>{{ playerId }}</b>
-    <h2>PO</h2>
-    {{owner}}
-    <h2>Members</h2>
-    <li v-for="(member, index) in members">{{member}}</li>
-    <hr />select your number :
-    <input type="number" v-model="number" />
-    <input
-      v-if="!dones.includes(player)"
-      type="button"
-      value="attack!"
-      v-on:click="updateScores(number)"
-    />
+    <h1>GAME</h1>
+    <div v-if="isOwner">you are PO</div>
+    <div v-else>
+      your name is
+      <b>{{player}}</b>
+      your id is
+      <b>{{ playerId }}</b>
+    </div>
+    <div class="box">
+      <div>
+        <h2>PO</h2>
+        {{owner}}
+      </div>
+      <div>
+        <h2>Members</h2>
+        <li v-for="(member, index) in members">{{member}}</li>
+      </div>
+    </div>
+    <hr />
+    <div v-if="isOwner">
+      <input type="button" value="reset" v-on:click="resetGame()" />
+    </div>
+    <div v-else>
+      select your number :
+      <input type="number" v-model="number" />
+      <input
+        v-if="!dones.includes(player)"
+        type="button"
+        value="attack!"
+        v-on:click="updateScores(number)"
+      />
+    </div>
     <hr />
     <div id="result" v-if="waits.length == 0 && scores">
       <h2>result</h2>
       <li v-for="(r, index) in result">{{r[1]}}{{r[2]}}</li>
     </div>
-    <div id="in_game" v-else>
-      <h2>waiting</h2>
-      <li v-for="(w, index) in waits">{{w}}</li>
-      <h2>decided</h2>
-      <li v-for="(d, index) in dones">{{d}}</li>
+    <div class="box" v-else>
+      <div id="waiting">
+        <h2>waiting</h2>
+        <li v-for="(w, index) in waits">{{w}}</li>
+      </div>
+      <div id="decided">
+        <h2>decided</h2>
+        <li v-for="(d, index) in dones">{{d}}</li>
+      </div>
     </div>
   </div>
 </template>
@@ -86,11 +106,24 @@ export default {
     }
   },
   mounted() {
+    if (this.$route.query && this.$route.query.is_owner) {
+      this.code = this.$route.params.code; // vue router issue. when query param was set, props doesn't works well
+      this.isOwner = true;
+    }
     this.getOwner(this.code);
     this.keepUpdatingMembers();
     this.keepUpdatingScores();
   },
   methods: {
+    resetGame: function() {
+      let that = this;
+      this.$database
+        .ref("/plans/" + this.code + "/scores/")
+        .remove()
+        .then(function() {
+          console.log("PO reset game");
+        }, that);
+    },
     updateScores: function(number) {
       if (!this.scores || this.scores === undefined) {
         this.scores = [];
@@ -110,6 +143,11 @@ export default {
         },
         that
       );
+      this.$database
+        .ref("/plans/" + this.code + "/scores/")
+        .on("child_removed", function(snapshot) {
+          that.scores = null;
+        });
     },
     keepUpdatingMembers: function() {
       let that = this;
@@ -147,10 +185,15 @@ export default {
         ids.push(Number(score[0]));
       }
       return ids;
-    },
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
 </style>

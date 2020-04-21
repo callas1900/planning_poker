@@ -3,7 +3,16 @@
     <h1>Make New Planning Session</h1>
     <input v-model="owner" placeholder="input your name" />
     <input type="button" value="make!" v-on:click="makeSession(owner)" />
-    <h1>{{code}}</h1>
+    <div v-if="code">
+      <h1>{{code}}</h1>
+      <p>Send your code to team members!</p>
+      <router-link
+        :to="{name: 'owner', params: { code: code}, query: { is_owner: true}}"
+        
+      >
+        <h2>Go to the session</h2>
+      </router-link>
+    </div>
   </div>
 </template>
 

@@ -33,6 +33,14 @@ const router = new Router({
       props: true,
     },
     {
+      path: '/game/:code',
+      name: 'owner',
+      component: Game,
+      props: (route) => ({
+        query: route.query.is_owner
+      }),
+    },
+    {
       path: '/about/',
       name: 'about',
       component: About,
