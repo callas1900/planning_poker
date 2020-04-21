@@ -33,7 +33,6 @@ export default {
         .then(function(snapshot) {
           let session = snapshot.val();
           let owner = session && session.owner && session.owner[0];
-          console.log(session);
           let isMembers = session.members && session.members !== undefined;
           let isSameMemeber = isMembers && session.members.includes(that.name);
           if (owner && isMembers && !isSameMemeber) {
