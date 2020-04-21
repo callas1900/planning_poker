@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  props:['code'],
+  props:['code', 'name'],
   name: "game",
   data() {
     return {};
