@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>GAME</h1>
+    <h1 class="md-title">GAME</h1>
     <div v-if="isOwner">you are PO</div>
     <div v-else>
       your name is
@@ -11,11 +11,11 @@
     <div class="box">
       <div>
         <h2>PO</h2>
-        {{owner}}
+        <md-chip class="md-accent">{{ owner }}</md-chip>
       </div>
       <div>
         <h2>Members</h2>
-        <li v-for="(member, index) in members">{{member}}</li>
+        <md-chip class="md-primary" v-for="member in members" :key="member">{{ member }}</md-chip>
       </div>
     </div>
     <hr />
@@ -23,28 +23,38 @@
       <input type="button" value="reset" v-on:click="resetGame()" />
     </div>
     <div v-else>
-      select your number :
-      <input type="number" v-model="number" />
-      <input
-        v-if="!dones.includes(player)"
-        type="button"
-        value="attack!"
+      <md-field>
+        <label>Select your number</label>
+        <md-input v-model="number" type="number"></md-input>
+      </md-field>
+      <md-button
+        class="md-raised md-primary"
+        :disabled="dones.includes(player)"
         v-on:click="updateScores(number)"
-      />
+      >attack!</md-button>
     </div>
     <hr />
     <div id="result" v-if="waits.length == 0 && scores">
       <h2>result</h2>
-      <li v-for="(r, index) in result">{{r[1]}}{{r[2]}}</li>
+      <div class="result-card" v-for="r in result" :key="r">
+        <md-avatar class="md-avatar-icon md-large md-primary">
+          <md-ripple>{{r[1]}}</md-ripple>
+        </md-avatar>
+        {{r[2]}}
+      </div>
     </div>
     <div class="box" v-else>
       <div id="waiting">
         <h2>waiting</h2>
-        <li v-for="(w, index) in waits">{{w}}</li>
+        <md-avatar class="md-avatar-icon md-large md-accent" v-for="w in waits" :key="w">
+          <md-ripple>{{w.slice(0, 2)}}</md-ripple>
+        </md-avatar>
       </div>
       <div id="decided">
         <h2>decided</h2>
-        <li v-for="(d, index) in dones">{{d}}</li>
+        <md-avatar class="md-avatar-icon md-large md-primary" v-for="d in dones" :key="d">
+          <md-ripple>{{d.slice(0, 2)}}</md-ripple>
+        </md-avatar>
       </div>
     </div>
   </div>
@@ -193,4 +203,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.result-card {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.md-avatar.md-theme-default.md-primary.md-avatar-icon {
+  margin: 5px;
+}
 </style>

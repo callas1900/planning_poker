@@ -29,7 +29,7 @@ export default {
   (
     primary: #3fffbe,
     // The primary color of your brand
-      accent: #3904e7,
+      accent: #FFE347,
     // The secondary color of your brand
       theme: dark
   )
