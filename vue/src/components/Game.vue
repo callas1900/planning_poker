@@ -72,10 +72,12 @@ export default {
       }
       let result = Array.from(this.scores);
       result.sort(function(a, b) {
-        if (a[1] < b[1]) {
+        let an = Number(a[1]);
+        let bn = Number(b[1]);
+        if (an < bn) {
           return -1;
         }
-        if (a[1] > b[1]) {
+        if (an > bn) {
           return 1;
         }
         return 0;
