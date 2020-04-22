@@ -1,14 +1,28 @@
 <template>
   <div>
-    <h1>Join</h1>code:
-    <input type="text" v-model="code" placeholder="input provided code" />
-    name:
-    <input type="text" v-model="name" placeholder="type your name" />
-    <input type="button" value="join!" v-on:click="join(code)" v-if="code && name" />
-    <router-link :to="{name: 'game', params: { code: code, player: name}}" v-if="found">
-      <h2>Go to the session</h2>
-    </router-link>
-    <h2>{{message}}</h2>
+    <h1 class="md-title">Join</h1>
+    <div v-if="found">
+      <h2>Congratulations! Success to find your session!</h2>
+      <router-link :to="{name: 'game', params: { code: code, player: name}}">
+        <h2>Go to the session</h2>
+      </router-link>
+    </div>
+    <div v-else>
+      <md-field>
+        <label>Input provided code.</label>
+        <md-input v-model="code"></md-input>
+      </md-field>
+      <md-field>
+        <label>Type your name.</label>
+        <md-input v-model="name"></md-input>
+      </md-field>
+      <md-button
+        class="md-raised md-primary"
+        :disabled="!(code && name)"
+        v-on:click="join(code)"
+      >join!</md-button>
+      <h2>{{message}}</h2>
+    </div>
   </div>
 </template>
 

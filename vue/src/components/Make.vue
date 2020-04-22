@@ -2,7 +2,7 @@
   <div class="container">
     <h1 class="md-title">Make New Planning Session</h1>
     <md-field>
-      <label>Input your name.</label>
+      <label>Type your name.</label>
       <md-input v-model="owner"></md-input>
     </md-field>
     <md-button class="md-raised md-primary" v-on:click="makeSession(owner)">make!</md-button>
