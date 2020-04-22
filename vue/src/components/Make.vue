@@ -1,21 +1,26 @@
 <template>
-  <div>
+  <div class="container">
     <h1 class="md-title">Make New Planning Session</h1>
-    <input v-model="owner" placeholder="input your name" />
-    <input type="button" value="make!" v-on:click="makeSession(owner)" />
-    <div v-if="code">
-      <h1>{{code}}</h1>
-      <p>Send your code to team members!</p>
-      <router-link
-        :to="{name: 'owner', params: { code: code}, query: { is_owner: true}}"
-        
-      >
-        <h2>Go to the session</h2>
-      </router-link>
-    </div>
+    <md-field>
+      <label>Input your name.</label>
+      <md-input v-model="owner"></md-input>
+    </md-field>
+    <md-button class="md-raised md-primary" v-on:click="makeSession(owner)">make!</md-button>
+    <md-card md-with-hover v-if="code">
+      <md-card-header>
+        <div class="md-title">Send your code to team members!</div>
+      </md-card-header>
+      <md-card-content>
+        <h1>{{code}}</h1>
+      </md-card-content>
+      <md-card-actions>
+        <router-link :to="{name: 'owner', params: { code: code}, query: { is_owner: true}}">
+          <h2>Go to the session</h2>
+        </router-link>
+      </md-card-actions>
+    </md-card>
   </div>
 </template>
-
 
 <script>
 export default {
@@ -65,4 +70,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.md-card {
+  margin-top: 70px;
+}
 </style>

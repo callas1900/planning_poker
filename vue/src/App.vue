@@ -4,7 +4,9 @@
       <md-tab id="tab-home" md-label="Home" to="/"></md-tab>
       <md-tab id="tab-about" md-label="About" to="/about"></md-tab>
     </md-tabs>
-    <router-view></router-view>
+    <div id="container">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -22,11 +24,16 @@ export default {
 <style lang="scss">
 @import "~vue-material/dist/theme/engine"; // Import the theme engine
 
-@include md-register-theme("default", (
-  primary: #3fffbe, // The primary color of your brand
-  accent: #3904e7, // The secondary color of your brand
-  theme: dark
-));
+@include md-register-theme(
+  "default",
+  (
+    primary: #3fffbe,
+    // The primary color of your brand
+      accent: #3904e7,
+    // The secondary color of your brand
+      theme: dark
+  )
+);
 
 @import "~vue-material/dist/theme/all"; // Apply the theme
 #app {
@@ -46,13 +53,18 @@ ul {
   padding: 0;
 }
 
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .md-app {
   max-height: 400px;
   border: 1px solid rgba(#000, 0.12);
 }
 .md-title {
- margin-top: 70px; 
- margin-bottom: 70px; 
+  margin-top: 70px;
+  margin-bottom: 70px;
 }
 .box {
   display: flex;
