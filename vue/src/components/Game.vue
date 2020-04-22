@@ -20,7 +20,7 @@
     </div>
     <hr />
     <div v-if="isOwner">
-      <input type="button" value="reset" v-on:click="resetGame()" />
+      <md-button class="md-raised md-primary" v-on:click="resetGame()">reset!</md-button>
     </div>
     <div v-else>
       <md-field>
@@ -36,7 +36,7 @@
     <hr />
     <div id="result" v-if="waits.length == 0 && scores">
       <h2>result</h2>
-      <div class="result-card" v-for="r in result" :key="r">
+      <div class="result-card" v-for="r in result" :key="r[0]">
         <md-avatar class="md-avatar-icon md-large md-primary">
           <md-ripple>{{r[1]}}</md-ripple>
         </md-avatar>
@@ -57,6 +57,9 @@
         </md-avatar>
       </div>
     </div>
+    <md-snackbar md-position="center" :md-active.sync="showSnackbar" md-persistent>
+      <span>{{message}}</span>
+    </md-snackbar>
   </div>
 </template>
 
@@ -72,7 +75,9 @@ export default {
       owner: null,
       number: null,
       members: [],
-      scores: null
+      scores: null,
+      showSnackbar: false,
+      message: null
     };
   },
   computed: {
@@ -134,6 +139,7 @@ export default {
         .remove()
         .then(function() {
           console.log("PO reset game");
+          that.snackbar("Snake? Snake? SNAAAAAAAAKE!!!", that);
         }, that);
     },
     updateScores: function(number) {
@@ -174,11 +180,50 @@ export default {
                 that.playerId = i;
               }
             }
+            if (that.members && that.members.length > 0) {
+              that.showNewMember(members[members.length - 1], that);
+            }
             that.members = members;
           }
         },
         that
       );
+    },
+    showNewMember: function(member, that) {
+      if (!that) {
+        that = this;
+      }
+      var suffixes = [
+        "Draws Near!",
+        "is Raring to Go!",
+        "Steals the Show!",
+        "Hits the Big Time!",
+        "Turns Over A New Leaf!",
+        "Turns Up the Heat!",
+        "Enters the Ring!",
+        "Lashes Out!",
+        "Pipes Up!",
+        "Comes Aboard!",
+        "Faces the Fury!",
+        "Joins Smash House!",
+        "Gets Wicked!",
+        "Joins the Battle!",
+        "Storms Into Battle!"
+      ];
+      for (let i = suffixes.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * i);
+        let k = suffixes[i];
+        suffixes[i] = suffixes[j];
+        suffixes[j] = k;
+      }
+      that.snackbar('"' + member + '" ' + suffixes[0]);
+    },
+    snackbar: function(message, that) {
+      if (!that) {
+        that = this;
+      }
+      that.message = message;
+      that.showSnackbar = true;
     },
     getOwner: function(code) {
       let that = this;
