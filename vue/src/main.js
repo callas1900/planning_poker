@@ -1,4 +1,6 @@
 import Vue from 'vue'
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.min.css'
 import Router from 'vue-router'
 import Firebase from 'firebase'
 import App from './App.vue'
@@ -8,6 +10,7 @@ import Join from './components/Join.vue'
 import Game from './components/Game.vue'
 import About from './components/About.vue'
 Vue.use(Router)
+Vue.use(VueMaterial)
 
 const router = new Router({
   routes: [

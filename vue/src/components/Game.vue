@@ -193,9 +193,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.box {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
 </style>

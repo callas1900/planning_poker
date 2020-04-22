@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Make New Planning Session</h1>
+    <h1 class="md-title">Make New Planning Session</h1>
     <input v-model="owner" placeholder="input your name" />
     <input type="button" value="make!" v-on:click="makeSession(owner)" />
     <div v-if="code">
