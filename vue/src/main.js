@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueMaterial from 'vue-material'
+import VueClipboard from 'vue-clipboard2'
+import Toasted from 'vue-toasted'
 import 'vue-material/dist/vue-material.min.css'
 import Router from 'vue-router'
 import Firebase from 'firebase'
@@ -11,6 +13,8 @@ import Game from './components/Game.vue'
 import About from './components/About.vue'
 Vue.use(Router)
 Vue.use(VueMaterial)
+Vue.use(VueClipboard)
+Vue.use(Toasted)
 
 const router = new Router({
   routes: [

@@ -13,8 +13,10 @@
   "dependencies": {
     "firebase": "^7.14.1",
     "vue": "^2.5.11",
+    "vue-clipboard2": "^0.3.1",
     "vue-material": "^1.0.0-beta-12",
-    "vue-router": "^3.1.6"
+    "vue-router": "^3.1.6",
+    "vue-toasted": "^1.1.28"
   },
   "browserslist": [
     "> 1%",

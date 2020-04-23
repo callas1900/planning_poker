@@ -22,6 +22,9 @@
         <h1>{{code}}</h1>
       </md-card-content>
       <md-card-actions>
+        <md-button v-on:click="copyToClipBoard()">Copy</md-button>
+      </md-card-actions>
+      <md-card-actions>
         <router-link :to="{name: 'owner', params: { code: code}, query: { is_owner: true}}">
           <h2>Go to the session</h2>
         </router-link>
@@ -82,6 +85,21 @@ export default {
         goal: goal,
         cards: [cards.split(",")]
       });
+    },
+    copyToClipBoard: function() {
+      let that = this;
+      this.$copyText(this.code).then(function (e) {
+          let toast = that.$toasted.show("Code copied!", { 
+            theme: "toasted-primary", 
+            type: "success",
+            position: "bottom-right", 
+            duration : 5000
+          });
+          console.log(e)
+        }, function (e) {
+          // alert('Can not copy')
+          console.log(e)
+        })
     }
   }
 };
