@@ -13,23 +13,26 @@
       <label>Change card set if you want.</label>
       <md-input v-model="cards"></md-input>
     </md-field>
-    <md-button class="md-raised md-primary" v-on:click="makeSession(owner)">make!</md-button>
+    <md-button class="md-raised md-primary" @click="makeSession(owner)">make!</md-button>
     <md-card md-with-hover v-if="code">
       <md-card-header>
         <div class="md-title">Send your code to team members!</div>
       </md-card-header>
       <md-card-content>
-        <h1>{{code}}</h1>
+        <div id="code-contaienr" @click="copyToClipBoard(code)">
+          <h1>{{code}}</h1>
+          <md-icon>assignment</md-icon>
+        </div>
       </md-card-content>
-      <md-card-actions>
-        <md-button v-on:click="copyToClipBoard()">Copy</md-button>
-      </md-card-actions>
       <md-card-actions>
         <router-link :to="{name: 'owner', params: { code: code}, query: { is_owner: true}}">
           <h2>Go to the session</h2>
         </router-link>
       </md-card-actions>
     </md-card>
+    <md-snackbar md-position="center" :md-active.sync="showSnackbar" md-persistent>
+      <span>{{message}}</span>
+    </md-snackbar>
   </div>
 </template>
 
@@ -51,7 +54,7 @@ export default {
       let code = uuid.split("-")[0];
       let goal = this.goal;
       console.log(this.goal);
-      if ( !goal || goal === "" ){ 
+      if (!goal || goal === "") {
         goal = "GAME";
       }
       this.writeData(code, owner, uuid, goal, this.cards);
@@ -86,20 +89,17 @@ export default {
         cards: [cards.split(",")]
       });
     },
-    copyToClipBoard: function() {
+    copyToClipBoard: function(code) {
       let that = this;
-      this.$copyText(this.code).then(function (e) {
-          let toast = that.$toasted.show("Code copied!", { 
-            theme: "toasted-primary", 
-            type: "success",
-            position: "bottom-right", 
-            duration : 5000
-          });
-          console.log(e)
-        }, function (e) {
-          // alert('Can not copy')
-          console.log(e)
-        })
+      this.$copyText(code).then(
+        function(e) {
+          that.snackbar("Code was copied!", that);
+          console.log(e);
+        },
+        function(e) {
+          console.log(e);
+        }
+      );
     }
   }
 };
@@ -108,5 +108,17 @@ export default {
 <style lang="scss" scoped>
 .md-card {
   margin-top: 70px;
+}
+#code-contaienr {
+  h1 {
+    display: inline;
+  }
+  .md-icon {
+    margin: 5px;
+  }
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 </style>
