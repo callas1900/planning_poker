@@ -10,7 +10,7 @@
         <md-chip class="md-primary" v-for="member in members" :key="member">{{ member }}</md-chip>
       </div>
     </div>
-    <h1 class="md-title">GAME</h1>
+    <h1 class="md-title">{{goal}}</h1>
     <div v-if="isOwner">you are PO</div>
     <div v-else>
       your name is
@@ -84,7 +84,8 @@ export default {
       members: [],
       scores: null,
       showSnackbar: false,
-      message: null
+      message: null,
+      goal: "GAME"
     };
   },
   computed: {
@@ -242,6 +243,8 @@ export default {
           let owner = session && session.owner && session.owner[0];
           that.owner = owner;
           that.cards = session.cards[0];
+          console.log(session.goal);
+          that.goal = session.goal;
         }, that);
     },
     getIds: function(scores) {

@@ -74,6 +74,7 @@ export default {
       members.push(that.name);
       this.$database.ref("plans/" + code).set({
         owner: session.owner,
+        goal: session.goal,
         members: members,
         cards: session.cards
       });

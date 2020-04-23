@@ -6,6 +6,10 @@
       <md-input v-model="owner"></md-input>
     </md-field>
     <md-field>
+      <label>What is the goal.</label>
+      <md-input v-model="goal"></md-input>
+    </md-field>
+    <md-field>
       <label>Change card set if you want.</label>
       <md-input v-model="cards"></md-input>
     </md-field>
@@ -33,6 +37,7 @@ export default {
     return {
       owner: null,
       code: null,
+      goal: null,
       cards: "1,2,3,5,8,13,100"
     };
   },
@@ -41,7 +46,12 @@ export default {
       let uuid = this.generateUuid();
       console.log(uuid);
       let code = uuid.split("-")[0];
-      this.writeData(code, owner, uuid, this.cards);
+      let goal = this.goal;
+      console.log(this.goal);
+      if ( !goal || goal === "" ){ 
+        goal = "GAME";
+      }
+      this.writeData(code, owner, uuid, goal, this.cards);
       // read data
       let that = this;
       this.$database
@@ -65,10 +75,11 @@ export default {
         return v.toString(16);
       });
     },
-    writeData: function(code, owner, uuid, cards) {
+    writeData: function(code, owner, uuid, goal, cards) {
       console.log(cards);
       this.$database.ref("plans/" + code).set({
         owner: [owner, uuid],
+        goal: goal,
         cards: [cards.split(",")]
       });
     }
