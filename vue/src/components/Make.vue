@@ -5,6 +5,10 @@
       <label>Type your name.</label>
       <md-input v-model="owner"></md-input>
     </md-field>
+    <md-field>
+      <label>Change card set if you want.</label>
+      <md-input v-model="cards"></md-input>
+    </md-field>
     <md-button class="md-raised md-primary" v-on:click="makeSession(owner)">make!</md-button>
     <md-card md-with-hover v-if="code">
       <md-card-header>
@@ -28,7 +32,8 @@ export default {
   data() {
     return {
       owner: null,
-      code: null
+      code: null,
+      cards: "1,2,3,5,8,13,100"
     };
   },
   methods: {
@@ -36,7 +41,7 @@ export default {
       let uuid = this.generateUuid();
       console.log(uuid);
       let code = uuid.split("-")[0];
-      this.writeData(code, owner, uuid);
+      this.writeData(code, owner, uuid, this.cards);
       // read data
       let that = this;
       this.$database
@@ -60,9 +65,11 @@ export default {
         return v.toString(16);
       });
     },
-    writeData: function(code, owner, uuid) {
+    writeData: function(code, owner, uuid, cards) {
+      console.log(cards);
       this.$database.ref("plans/" + code).set({
-        owner: [owner, uuid]
+        owner: [owner, uuid],
+        cards: [cards.split(",")]
       });
     }
   }

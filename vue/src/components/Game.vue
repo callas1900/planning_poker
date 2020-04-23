@@ -1,5 +1,15 @@
 <template>
   <div>
+    <div class="box">
+      <div>
+        <h2>owner</h2>
+        <md-chip class="md-accent">{{ owner }}</md-chip>
+      </div>
+      <div>
+        <h2>member</h2>
+        <md-chip class="md-primary" v-for="member in members" :key="member">{{ member }}</md-chip>
+      </div>
+    </div>
     <h1 class="md-title">GAME</h1>
     <div v-if="isOwner">you are PO</div>
     <div v-else>
@@ -8,25 +18,21 @@
       your id is
       <b>{{ playerId }}</b>
     </div>
-    <div class="box">
-      <div>
-        <h2>PO</h2>
-        <md-chip class="md-accent">{{ owner }}</md-chip>
-      </div>
-      <div>
-        <h2>Members</h2>
-        <md-chip class="md-primary" v-for="member in members" :key="member">{{ member }}</md-chip>
-      </div>
-    </div>
     <hr />
     <div v-if="isOwner">
       <md-button class="md-raised md-primary" v-on:click="resetGame()">reset!</md-button>
     </div>
     <div v-else>
-      <md-field>
-        <label>Select your number</label>
-        <md-input v-model="number" type="number"></md-input>
-      </md-field>
+      <div class="number-card-container">
+        <div v-for="card in cards" :key="card" @click="number = card">
+          <md-card md-with-hover v-if="number == card" class="number-card md-primary">
+            <h1>{{card}}</h1>
+          </md-card>
+          <md-card md-with-hover v-else class="number-card">
+            <h1>{{card}}</h1>
+          </md-card>
+        </div>
+      </div>
       <md-button
         class="md-raised md-primary"
         :disabled="dones.includes(player)"
@@ -73,6 +79,7 @@ export default {
       isOwner: false,
       playerId: null,
       owner: null,
+      cards: null,
       number: null,
       members: [],
       scores: null,
@@ -127,7 +134,7 @@ export default {
       this.code = this.$route.params.code; // vue router issue. when query param was set, props doesn't works well
       this.isOwner = true;
     }
-    this.getOwner(this.code);
+    this.getSettings(this.code);
     this.keepUpdatingMembers();
     this.keepUpdatingScores();
   },
@@ -225,7 +232,7 @@ export default {
       that.message = message;
       that.showSnackbar = true;
     },
-    getOwner: function(code) {
+    getSettings: function(code) {
       let that = this;
       this.$database
         .ref("/plans/" + code)
@@ -234,6 +241,7 @@ export default {
           let session = snapshot.val();
           let owner = session && session.owner && session.owner[0];
           that.owner = owner;
+          that.cards = session.cards[0];
         }, that);
     },
     getIds: function(scores) {
@@ -253,7 +261,22 @@ export default {
   justify-content: flex-start;
   align-items: center;
 }
+.md-avatar.md-theme-default.md-accent.md-avatar-icon {
+  margin: 5px;
+}
 .md-avatar.md-theme-default.md-primary.md-avatar-icon {
   margin: 5px;
+}
+.number-card-container {
+  display: flex;
+  flex-direction: row;
+}
+.number-card {
+  width: 50px;
+  height: 80px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

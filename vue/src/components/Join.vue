@@ -63,19 +63,19 @@ export default {
         }, that);
     },
     register: function(session, that) {
+      console.log("---------");
+      console.log(session);
       let code = that.code;
       let name = that.name;
       let members = session.members;
-      console.log(members);
       if (!members || members === undefined) {
-        members = [that.name];
-      } else {
-        members.push(that.name);
+        members = [];
       }
-      console.log(members);
+      members.push(that.name);
       this.$database.ref("plans/" + code).set({
         owner: session.owner,
-        members: members
+        members: members,
+        cards: session.cards
       });
     }
   }
