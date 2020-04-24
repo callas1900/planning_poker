@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueMaterial from 'vue-material'
 import VueClipboard from 'vue-clipboard2'
-import Toasted from 'vue-toasted'
 import 'vue-material/dist/vue-material.min.css'
 import Router from 'vue-router'
 import Firebase from 'firebase'
@@ -14,7 +13,6 @@ import About from './components/About.vue'
 Vue.use(Router)
 Vue.use(VueMaterial)
 Vue.use(VueClipboard)
-Vue.use(Toasted)
 
 const router = new Router({
   routes: [
@@ -58,6 +56,24 @@ const router = new Router({
 const { firebaseConfig } = require('./firebase/init.js');
 const database = Firebase.initializeApp(firebaseConfig).database();
 Vue.prototype.$database = database;
+
+Vue.mixin({
+  data() {
+    return {
+      showSnackbar: false,
+      message: null
+    };
+  },
+  methods: {
+    snackbar: function (message, that) {
+      if (!that) {
+        that = this;
+      }
+      that.message = message;
+      that.showSnackbar = true;
+    },
+  }
+})
 
 new Vue({
   el: '#app',

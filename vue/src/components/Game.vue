@@ -83,8 +83,6 @@ export default {
       number: null,
       members: [],
       scores: null,
-      showSnackbar: false,
-      message: null,
       goal: "GAME"
     };
   },
@@ -225,13 +223,6 @@ export default {
         suffixes[j] = k;
       }
       that.snackbar('"' + member + '" ' + suffixes[0]);
-    },
-    snackbar: function(message, that) {
-      if (!that) {
-        that = this;
-      }
-      that.message = message;
-      that.showSnackbar = true;
     },
     getSettings: function(code) {
       let that = this;
