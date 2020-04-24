@@ -64,7 +64,6 @@ export default {
     },
     register: function(session, that) {
       console.log("---------");
-      console.log(session);
       let code = that.code;
       let name = that.name;
       let members = session.members;
@@ -74,9 +73,8 @@ export default {
       members.push(that.name);
       this.$database.ref("plans/" + code).set({
         owner: session.owner,
-        goal: session.goal,
+        prefs: session.prefs,
         members: members,
-        cards: session.cards
       });
     }
   }

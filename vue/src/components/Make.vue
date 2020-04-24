@@ -6,14 +6,14 @@
       <md-input v-model="owner"></md-input>
     </md-field>
     <md-field>
-      <label>What is the goal.</label>
-      <md-input v-model="goal"></md-input>
+      <label>Change title if you want.</label>
+      <md-input v-model="title"></md-input>
     </md-field>
     <md-field>
       <label>Change card set if you want.</label>
       <md-input v-model="cards"></md-input>
     </md-field>
-    <md-button class="md-raised md-primary" @click="makeSession(owner)">make!</md-button>
+    <md-button class="md-raised md-primary" @click="makeSession(owner, title, cards)">make!</md-button>
     <md-card md-with-hover v-if="code">
       <md-card-header>
         <div class="md-title">Send your code to team members!</div>
@@ -43,21 +43,20 @@ export default {
     return {
       owner: null,
       code: null,
-      goal: null,
+      title: "GAME",
       cards: "1,2,3,5,8,13,100"
     };
   },
   methods: {
-    makeSession: function(owner) {
+    makeSession: function(owner, title, cards) {
       let uuid = this.generateUuid();
       console.log(uuid);
       let code = uuid.split("-")[0];
-      let goal = this.goal;
-      console.log(this.goal);
-      if (!goal || goal === "") {
-        goal = "GAME";
-      }
-      this.writeData(code, owner, uuid, goal, this.cards);
+      let prefs = {
+        title: title,
+        cards: [this.cards.split(",")]
+      };
+      this.writeData(code, owner, uuid, prefs);
       // read data
       let that = this;
       this.$database
@@ -81,12 +80,12 @@ export default {
         return v.toString(16);
       });
     },
-    writeData: function(code, owner, uuid, goal, cards) {
-      console.log(cards);
+    writeData: function(code, owner, uuid, prefs) {
+      console.log(prefs);
+
       this.$database.ref("plans/" + code).set({
         owner: [owner, uuid],
-        goal: goal,
-        cards: [cards.split(",")]
+        prefs: prefs
       });
     },
     copyToClipBoard: function(code) {
