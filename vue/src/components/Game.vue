@@ -145,7 +145,6 @@ export default {
         .remove()
         .then(function() {
           console.log("PO reset game");
-          that.snackbar("Snake? Snake? SNAAAAAAAAKE!!!", that);
         }, that);
     },
     updateScores: function(number) {
@@ -171,6 +170,7 @@ export default {
         .ref("/plans/" + this.code + "/scores/")
         .on("child_removed", function(snapshot) {
           that.scores = null;
+          that.snackbar("Snake? Snake? SNAAAAAAAAKE!!!", that);
         });
     },
     keepUpdatingMembers: function() {
@@ -231,7 +231,6 @@ export default {
         .once("value")
         .then(function(snapshot) {
           let session = snapshot.val();
-      console.log(session);
           let owner = session && session.owner && session.owner[0];
           that.owner = owner;
           that.cards = session.prefs.cards[0];
@@ -255,10 +254,7 @@ export default {
   justify-content: flex-start;
   align-items: center;
 }
-.md-avatar.md-theme-default.md-accent.md-avatar-icon {
-  margin: 5px;
-}
-.md-avatar.md-theme-default.md-primary.md-avatar-icon {
+.md-avatar-icon {
   margin: 5px;
 }
 .number-card-container {

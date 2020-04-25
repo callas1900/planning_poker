@@ -25,11 +25,11 @@ export default {
 @include md-register-theme(
   "default",
   (
-    primary: #3fffbe,
     // The primary color of your brand
-      accent: #ffe347,
+      primary: #a1d978,
     // The secondary color of your brand
-      theme: dark
+      accent: #d93d86,
+    theme: dark // This can be dark or light
   )
 );
 
@@ -44,11 +44,6 @@ export default {
 h1,
 h2 {
   font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
 }
 
 #container {
