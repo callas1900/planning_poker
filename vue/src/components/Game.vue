@@ -132,7 +132,7 @@ export default {
       return this.dones.includes(this.player);
     },
     isFinished: function() {
-      return this.waits.length == 0 && this.scores;
+      return this.waits.length == 0 && this.scores ? true : false;
     },
     buttonText: function() {
       return !this.isFinished && this.isDecided ? "CANCEL..." : "FIGHT!";
@@ -151,13 +151,12 @@ export default {
   methods: {
     resetGame: function() {
       let that = this;
-      that.writeMessage("");
       this.$database
         .ref("/plans/" + this.code + "/scores/")
         .remove()
         .then(function() {
           console.log("Dealer reset game");
-          that.writeMessage("Snake? Snake? SNAAAAAAAAKE!!!");
+          that.sendMessage("Snake? Snake? SNAAAAAAAAKE!!!");
         }, that);
     },
     updateScores: function(number, playerId, scores) {
@@ -182,8 +181,10 @@ export default {
     writeScore: function(scores) {
       this.$database.ref("plans/" + this.code + "/scores/").set(scores);
     },
-    writeMessage: function(message) {
-      this.$database.ref("plans/" + this.code + "/message/").set(message);
+    sendMessage: function(message) {
+      let messageRef = this.$database.ref("plans/" + this.code + "/message/");
+      messageRef.set(message);
+      messageRef.set(null);
     },
     keepUpdatingScores: function() {
       let that = this;
