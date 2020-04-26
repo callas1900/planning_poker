@@ -71,11 +71,7 @@ export default {
         members = [];
       }
       members.push(that.name);
-      this.$database.ref("plans/" + code).set({
-        owner: session.owner,
-        prefs: session.prefs,
-        members: members,
-      });
+      this.$database.ref("plans/" + code + "/members/").set(members);
     }
   }
 };

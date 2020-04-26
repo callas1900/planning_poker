@@ -179,10 +179,10 @@ export default {
       this.writeScore(scores);
     },
     writeScore: function(scores) {
-      this.$database.ref("plans/" + this.code + "/scores/").set(scores);
+      this.$database.ref("/plans/" + this.code + "/scores/").set(scores);
     },
     sendMessage: function(message) {
-      let messageRef = this.$database.ref("plans/" + this.code + "/message/");
+      let messageRef = this.$database.ref("/plans/" + this.code + "/message/");
       messageRef.set(message);
       messageRef.set(null);
     },
