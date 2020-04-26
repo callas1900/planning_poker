@@ -34,10 +34,11 @@
         </div>
       </div>
       <md-button
-        class="md-raised md-primary"
-        :disabled="dones.includes(player)"
-        v-on:click="updateScores(number)"
-      >attack!</md-button>
+        v-bind:class="{'md-primary': !isDecided, 'md-accent' : isDecided}"
+        class="md-raised"
+        :disabled="isFinished || !number"
+        v-on:click="isDecided ? cancelOwnScore(playerId, scores) : updateScores(number, playerId, scores)"
+      >{{ buttonText }}</md-button>
     </div>
     <hr />
     <div id="result" v-if="waits.length == 0 && scores">
@@ -126,6 +127,15 @@ export default {
       return this.members.filter(function(v, i) {
         return ids.includes(i);
       });
+    },
+    isDecided: function() {
+      return this.dones.includes(this.player);
+    },
+    isFinished: function() {
+      return this.waits.length == 0 && this.scores;
+    },
+    buttonText: function() {
+      return !this.isFinished && this.isDecided ? "CANCEL..." : "FIGHT!";
     }
   },
   mounted() {
@@ -136,23 +146,44 @@ export default {
     this.getSettings(this.code);
     this.keepUpdatingMembers();
     this.keepUpdatingScores();
+    this.keepUpdatingMessage();
   },
   methods: {
     resetGame: function() {
       let that = this;
+      that.writeMessage("");
       this.$database
         .ref("/plans/" + this.code + "/scores/")
         .remove()
         .then(function() {
-          console.log("PO reset game");
+          console.log("Dealer reset game");
+          that.writeMessage("Snake? Snake? SNAAAAAAAAKE!!!");
         }, that);
     },
-    updateScores: function(number) {
-      if (!this.scores || this.scores === undefined) {
-        this.scores = [];
+    updateScores: function(number, playerId, scores) {
+      if (!scores || scores === undefined) {
+        scores = [];
       }
-      this.scores.push([this.playerId, number]);
-      this.$database.ref("plans/" + this.code + "/scores/").set(this.scores);
+      scores.push([playerId, number]);
+      this.writeScore(scores);
+    },
+    cancelOwnScore: function(playerId, scores) {
+      if (!this.scores || this.scores === undefined) {
+        return;
+      }
+      for (let i in scores) {
+        if (scores[i][0] == playerId) {
+          scores.splice(i, 1);
+          break;
+        }
+      }
+      this.writeScore(scores);
+    },
+    writeScore: function(scores) {
+      this.$database.ref("plans/" + this.code + "/scores/").set(scores);
+    },
+    writeMessage: function(message) {
+      this.$database.ref("plans/" + this.code + "/message/").set(message);
     },
     keepUpdatingScores: function() {
       let that = this;
@@ -160,18 +191,26 @@ export default {
         "value",
         function(snapshot) {
           let scores = snapshot.val();
-          if (scores && scores !== undefined) {
+          if (scores !== undefined) {
             that.scores = scores;
           }
         },
         that
       );
-      this.$database
-        .ref("/plans/" + this.code + "/scores/")
-        .on("child_removed", function(snapshot) {
-          that.scores = null;
-          that.snackbar("Snake? Snake? SNAAAAAAAAKE!!!", that);
-        });
+    },
+    keepUpdatingMessage: function() {
+      let that = this;
+      this.$database.ref("/plans/" + this.code + "/message/").on(
+        "value",
+        function(snapshot) {
+          let message = snapshot.val();
+          console.log(message);
+          if (message && message !== undefined) {
+            that.snackbar(message, that);
+          }
+        },
+        that
+      );
     },
     keepUpdatingMembers: function() {
       let that = this;
