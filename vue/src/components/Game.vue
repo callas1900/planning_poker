@@ -21,6 +21,13 @@
     <hr />
     <div v-if="isOwner">
       <md-button class="md-raised md-primary" v-on:click="resetGame()">reset!</md-button>
+      <div id="kick">
+      <md-field id="kick">
+        <label>Type user name.</label>
+        <md-input v-model="kickTarget"></md-input>
+      </md-field>
+      <md-button class="md-raised md-primary" v-on:click="kickUser(kickTarget)">kick!</md-button>
+      </div>
     </div>
     <div v-else>
       <div class="number-card-container">
@@ -84,7 +91,8 @@ export default {
       number: null,
       members: [],
       scores: null,
-      title: "GAME"
+      title: "GAME",
+      kickTarget: null
     };
   },
   computed: {
@@ -158,6 +166,17 @@ export default {
           console.log("Dealer reset game");
           that.sendMessage("Snake? Snake? SNAAAAAAAAKE!!!");
         }, that);
+    },
+    kickUser: function(kickTarget) {
+      for (let i in this.members) {
+        let member = this.members[i];
+        if (kickTarget == member) {
+          this.members.splice(i, 1);
+          this.kickTarget = null;
+          break;
+        }
+      }
+      this.$database.ref("plans/" + this.code + "/members/").set(this.members);
     },
     updateScores: function(number, playerId, scores) {
       if (!scores || scores === undefined) {
@@ -308,5 +327,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+#kick {
+  display: flex;
+  flex-direction: row;;
 }
 </style>
