@@ -5,21 +5,18 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    snackbar: {
-      visible: false,
-      text: '',
-      timeout: 4000,
+    homeTab: {
+      route: null,
     },
-    mutations: {
-      updateSnackbar(state, payload) {
-        state.snackbar.text = payload.text
-        state.snackbar.visible = true
-      }
-    },
-    actions: {
-      updateSnackbar({ commit }, payload) {
-        commit('updateSnackbar', payload)
-      }
+  },
+  mutations: {
+    updateHomeTab(state, payload) {
+      state.homeTab.route = payload
+    }
+  },
+  actions: {
+    updateHomeTab({ commit }, payload) {
+      commit('updateHomeTab', payload)
     }
   }
 })

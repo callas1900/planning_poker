@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <md-tabs class="md-primary" md-alignment="centered">
-      <md-tab id="tab-home" md-label="Home" to="/"></md-tab>
+      <md-tab id="tab-home" md-label="Home" to="/home"></md-tab>
       <md-tab id="tab-about" md-label="About" to="/about"></md-tab>
     </md-tabs>
     <div id="container">
