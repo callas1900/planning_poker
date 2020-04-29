@@ -62,6 +62,7 @@ const router = new Router({
     name: route.name,
     path: route.path,
     component: route.component,
+    props: route.props,
     beforeEnter: (to, from, next) => {
       if (route.tab == "home") {
         store.dispatch('updateHomeTab', to)
