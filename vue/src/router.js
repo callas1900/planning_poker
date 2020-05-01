@@ -19,6 +19,7 @@ const routes = [
   {
     path: '/home',
     name: 'dummy',
+    tab: "home",
   },
   {
     path: '/make',
@@ -64,13 +65,14 @@ const router = new Router({
     component: route.component,
     props: route.props,
     beforeEnter: (to, from, next) => {
-      if (route.tab == "home") {
-        store.dispatch('updateHomeTab', to)
-      }
-      if (to.path == "/home") {
-        next(store.state.homeTab.route
-          ? store.state.homeTab.route
-          : routes[0])
+      // cache home tab
+      if (route.tab != "home") {
+        store.dispatch('updateHomeTab', from)
+      } 
+      // apply cached home tab then remove it
+      if (route.name == "dummy") {
+        next(store.state.homeTab.route || routes[0])
+        store.dispatch('clearHomeTab')
       } else {
         next()
       }

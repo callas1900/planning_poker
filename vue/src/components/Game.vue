@@ -224,7 +224,6 @@ export default {
         "value",
         function(snapshot) {
           let message = snapshot.val();
-          console.log(message);
           if (message && message !== undefined) {
             that.snackbar(message, that);
           }

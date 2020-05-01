@@ -17,6 +17,9 @@ const store = new Vuex.Store({
   actions: {
     updateHomeTab({ commit }, payload) {
       commit('updateHomeTab', payload)
+    },
+    clearHomeTab({ commit }) {
+      commit('updateHomeTab', null)
     }
   }
 })
