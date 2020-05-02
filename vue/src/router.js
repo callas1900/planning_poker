@@ -4,7 +4,7 @@ import store from './store'
 import Home from './components/Home.vue'
 import Make from './components/Make.vue'
 import Join from './components/Join.vue'
-import Game from './components/Game.vue'
+import Game from './components/Game/Game.vue'
 import About from './components/About.vue'
 
 Vue.use(Router)
