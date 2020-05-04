@@ -1,6 +1,5 @@
 <template>
-  <div class="container">
-    <h1 class="md-title">Make New Planning Session</h1>
+  <div>
     <md-field>
       <label>Type your name.</label>
       <md-input v-model="owner"></md-input>
@@ -46,6 +45,9 @@ export default {
       title: "GAME",
       cards: "1,2,3,5,8,13,100"
     };
+  },
+  created() {
+    this.$store.dispatch('updateScreenTitle', "MAKING A SESSION")
   },
   methods: {
     makeSession: function(owner, title, cards) {

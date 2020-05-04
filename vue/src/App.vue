@@ -4,11 +4,15 @@
       <md-tab id="tab-home" md-label="Home" to="/home"></md-tab>
       <md-tab id="tab-about" md-label="About" to="/about"></md-tab>
     </md-tabs>
-    <div id="container">
-      <div class="md-layout md-alignment-center">
-        <h1 class="md-title">{{title}}</h1>
+    <div class="md-layout md-alignment-center">
+      <div class="md-layout-item md-size-5"></div>
+      <div id="container" class="md-layout-item md-size-90">
+        <div class="md-layout md-alignment-center">
+          <h1 class="md-title">{{title}}</h1>
+        </div>
+        <router-view></router-view>
       </div>
-      <router-view></router-view>
+      <div class="md-layout-item md-size-5"></div>
     </div>
   </div>
 </template>
@@ -17,15 +21,11 @@
 export default {
   name: "app",
   data() {
-    return {
-    };
-  },
-  created() {
-    this.$store.dispatch('updateScreenTitle', "PLANNING POKER")
+    return {};
   },
   computed: {
     title: function() {
-      return this.$store.state.screenTitle
+      return this.$store.state.screenTitle;
     }
   }
 };

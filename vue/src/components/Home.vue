@@ -31,6 +31,9 @@ export default {
   name: "home",
   data() {
     return {};
+  },
+  created() {
+    this.$store.dispatch('updateScreenTitle', "PLANNING POKER")
   }
 };
 </script>
