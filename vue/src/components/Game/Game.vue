@@ -1,82 +1,5 @@
-<template>
-  <div>
-    <div class="box">
-      <div>
-        <h2>owner</h2>
-        <md-chip class="md-accent">{{ owner }}</md-chip>
-      </div>
-      <div>
-        <h2>member</h2>
-        <md-chip class="md-primary" v-for="member in members" :key="member">{{ member }}</md-chip>
-      </div>
-    </div>
-    <h1 class="md-title">{{title}}</h1>
-    <div v-if="isOwner">you are PO</div>
-    <div v-else>
-      your name is
-      <b>{{player}}</b>
-      your id is
-      <b>{{ playerId }}</b>
-    </div>
-    <hr />
-    <div v-if="isOwner">
-      <md-button class="md-raised md-primary" v-on:click="resetGame()">reset!</md-button>
-      <div id="kick">
-      <md-field id="kick">
-        <label>Type user name.</label>
-        <md-input v-model="kickTarget"></md-input>
-      </md-field>
-      <md-button class="md-raised md-primary" v-on:click="kickUser(kickTarget)">kick!</md-button>
-      </div>
-    </div>
-    <div v-else>
-      <div class="number-card-container">
-        <div v-for="card in cards" :key="card" @click="number = card">
-          <md-card md-with-hover v-if="number == card" class="number-card md-primary">
-            <h1>{{card}}</h1>
-          </md-card>
-          <md-card md-with-hover v-else class="number-card">
-            <h1>{{card}}</h1>
-          </md-card>
-        </div>
-      </div>
-      <md-button
-        v-bind:class="{'md-primary': !isDecided, 'md-accent' : isDecided}"
-        class="md-raised"
-        :disabled="isFinished || !number"
-        v-on:click="isDecided ? cancelOwnScore(playerId, scores) : updateScores(number, playerId, scores)"
-      >{{ buttonText }}</md-button>
-    </div>
-    <hr />
-    <div id="result" v-if="waits.length == 0 && scores">
-      <h2>result</h2>
-      <div class="result-card" v-for="r in result" :key="r[0]">
-        <md-avatar class="md-avatar-icon md-large md-primary">
-          <md-ripple>{{r[1]}}</md-ripple>
-        </md-avatar>
-        {{r[2]}}
-      </div>
-    </div>
-    <div class="box" v-else>
-      <div id="waiting">
-        <h2>waiting</h2>
-        <md-avatar class="md-avatar-icon md-large md-accent" v-for="w in waits" :key="w">
-          <md-ripple>{{w.slice(0, 2)}}</md-ripple>
-        </md-avatar>
-      </div>
-      <div id="decided">
-        <h2>decided</h2>
-        <md-avatar class="md-avatar-icon md-large md-primary" v-for="d in dones" :key="d">
-          <md-ripple>{{d.slice(0, 2)}}</md-ripple>
-        </md-avatar>
-      </div>
-    </div>
-    <md-snackbar md-position="center" :md-active.sync="showSnackbar" md-persistent>
-      <span>{{message}}</span>
-    </md-snackbar>
-  </div>
+<template src="./Game.html">
 </template>
-
 
 <script>
 export default {
@@ -100,8 +23,8 @@ export default {
       if (this.waits.length != 0 || !this.scores || this.scores === undefined) {
         return [];
       }
-      let result = Array.from(this.scores);
-      result.sort(function(a, b) {
+      let temp = Array.from(this.scores);
+      temp.sort(function(a, b) {
         let an = Number(a[1]);
         let bn = Number(b[1]);
         if (an < bn) {
@@ -112,10 +35,19 @@ export default {
         }
         return 0;
       });
-      for (const i in result) {
-        let name = this.members[result[i][0]];
-        result[i].push(name);
+      let result = [];
+      let preScore = null;
+      for (const i in temp) {
+        let name = this.members[temp[i][0]]
+        let score = temp[i][1]
+        if (preScore && score == preScore) {
+          result[result.length - 1][1].push(name)
+        } else {
+          result.push([score, [name]])
+        }
+        let preScore = score;
       }
+      console.log(result)
       return result;
     },
     waits: function() {
@@ -306,29 +238,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.result-card {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-.md-avatar-icon {
-  margin: 5px;
-}
-.number-card-container {
-  display: flex;
-  flex-direction: row;
-}
-.number-card {
-  width: 50px;
-  height: 80px;
-  margin: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#kick {
-  display: flex;
-  flex-direction: row;;
-}
+<style lang="scss" scoped src="./Game.css">
 </style>
