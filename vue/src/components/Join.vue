@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1 class="md-title">Join</h1>
     <div v-if="found">
       <h2>Congratulations! Success to find your session!</h2>
       <router-link :to="{name: 'game', params: { code: code, player: name}}">
@@ -36,6 +35,9 @@ export default {
       found: false,
       message: null
     };
+  },
+  created() {
+    this.$store.dispatch('updateScreenTitle', "ABOUT")
   },
   methods: {
     join: function(code) {
