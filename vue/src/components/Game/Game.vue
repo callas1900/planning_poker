@@ -1,5 +1,4 @@
-<template src="./Game.html">
-</template>
+<template src="./Game.html"></template>
 
 <script>
 export default {
@@ -38,16 +37,16 @@ export default {
       let result = [];
       let preScore = null;
       for (const i in temp) {
-        let name = this.members[temp[i][0]]
-        let score = temp[i][1]
+        let name = this.members[temp[i][0]];
+        let score = temp[i][1];
         if (preScore && score == preScore) {
-          result[result.length - 1][1].push(name)
+          result[result.length - 1][1].push(name);
         } else {
-          result.push([score, [name]])
+          result.push([score, [name]]);
         }
         let preScore = score;
       }
-      console.log(result)
+      console.log(result);
       return result;
     },
     waits: function() {
@@ -176,7 +175,11 @@ export default {
                 that.playerId = i;
               }
             }
-            if (that.members && that.members.length > 0) {
+            if (
+              that.members &&
+              that.members.length > 0 &&
+              members.length > that.members.length
+            ) {
               that.showNewMember(members[members.length - 1], that);
             }
             that.members = members;
