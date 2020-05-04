@@ -18,8 +18,15 @@ export default {
   name: "app",
   data() {
     return {
-      title: "PLANNING POKER"
     };
+  },
+  created() {
+    this.$store.dispatch('updateScreenTitle', "PLANNING POKER")
+  },
+  computed: {
+    title: function() {
+      return this.$store.state.screenTitle
+    }
   }
 };
 </script>
