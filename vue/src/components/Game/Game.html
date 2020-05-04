@@ -58,12 +58,14 @@
         <div id="waiting">
             <h2>waiting</h2>
             <md-avatar class="md-avatar-icon md-large md-accent" v-for="w in waits" :key="w">
+                <md-tooltip md-direction="top">{{w}}</md-tooltip>
                 <md-ripple>{{w.slice(0, 2)}}</md-ripple>
             </md-avatar>
         </div>
         <div id="decided">
             <h2>decided</h2>
             <md-avatar class="md-avatar-icon md-large md-primary" v-for="d in dones" :key="d">
+                <md-tooltip md-direction="top">{{d}}</md-tooltip>
                 <md-ripple>{{d.slice(0, 2)}}</md-ripple>
             </md-avatar>
         </div>
