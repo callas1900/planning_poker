@@ -228,6 +228,7 @@ export default {
           that.owner = owner;
           that.cards = session.prefs.cards[0];
           that.title = session.prefs.title;
+          that.$store.dispatch('updateScreenTitle', that.title)
         }, that);
     },
     getIds: function(scores) {

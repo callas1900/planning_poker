@@ -1,18 +1,22 @@
 <template>
-  <div>
+  <div id="app">
     <md-tabs class="md-primary" md-alignment="centered">
       <md-tab id="tab-home" md-label="Home" to="/home"></md-tab>
       <md-tab id="tab-about" md-label="About" to="/about"></md-tab>
     </md-tabs>
-    <div class="md-layout md-alignment-center">
-      <div class="md-layout-item md-size-5"></div>
+    <div id="app-body" class="md-layout md-alignment-center">
+      <div class="md-layout-item md-size-5">
+        <!--left space -->
+      </div>
       <div id="container" class="md-layout-item md-size-90">
         <div class="md-layout md-alignment-center">
           <h1 class="md-title">{{title}}</h1>
         </div>
         <router-view></router-view>
       </div>
-      <div class="md-layout-item md-size-5"></div>
+      <div class="md-layout-item md-size-5">
+        <!-- right space -->
+      </div>
     </div>
   </div>
 </template>
@@ -49,5 +53,17 @@ export default {
 .md-title {
   margin-top: 70px;
   margin-bottom: 70px;
+}
+body {
+  height: 100%;
+}
+#app-body {
+  height: 100%;
+}
+#app {
+  height: 100%;
+}
+#container {
+  height: 100%;
 }
 </style>
