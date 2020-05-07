@@ -8,10 +8,14 @@ const store = new Vuex.Store({
     homeTab: {
       route: null,
     },
+    screenTitle: null
   },
   mutations: {
     updateHomeTab(state, payload) {
       state.homeTab.route = payload
+    },
+    updateScreenTitle(state, title) {
+      state.screenTitle = title
     }
   },
   actions: {
@@ -20,6 +24,9 @@ const store = new Vuex.Store({
     },
     clearHomeTab({ commit }) {
       commit('updateHomeTab', null)
+    },
+    updateScreenTitle({ commit }, title) {
+      commit('updateScreenTitle', title)
     }
   }
 })

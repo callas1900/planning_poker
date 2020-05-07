@@ -1,73 +1,76 @@
-<div>
-    <div class="box">
-        <div>
-            <h2>owner</h2>
-            <md-chip class="md-accent">{{ owner }}</md-chip>
-        </div>
-        <div>
-            <h2>member</h2>
-            <md-chip class="md-primary" v-for="member in members" :key="member">{{ member }}</md-chip>
-        </div>
+<div id="game-container" class="md-layout md-gutter md-alignment-top-center">
+    <div class="md-layout-item md-size-20 md-small-hide">
+        <md-list>
+            <md-subheader>owner</md-subheader>
+            <md-list-item>
+                <md-icon>account_box</md-icon>
+                <span>{{ owner }}</span>
+            </md-list-item>
+            <md-divider></md-divider>
+            <md-subheader>member</md-subheader>
+            <md-list-item v-for="member in members" :key="member">
+                <md-icon>account_box</md-icon>
+                <span>{{ member }}</span>
+            </md-list-item>
+        </md-list>
     </div>
-    <h1 class="md-title">{{title}}</h1>
-    <div v-if="isOwner">you are PO</div>
-    <div v-else>
-        your name is
-        <b>{{player}}</b>
-        your id is
-        <b>{{ playerId }}</b>
-    </div>
-    <hr />
-    <div v-if="isOwner">
-        <md-button class="md-raised md-primary" v-on:click="resetGame()">reset!</md-button>
-        <div id="kick">
-            <md-field id="kick">
-                <label>Type user name.</label>
-                <md-input v-model="kickTarget"></md-input>
-            </md-field>
-            <md-button class="md-raised md-primary" v-on:click="kickUser(kickTarget)">kick!</md-button>
-        </div>
-    </div>
-    <div v-else>
-        <div class="number-card-container">
-            <div v-for="card in cards" :key="card" @click="number = card">
-                <md-card md-with-hover v-if="number == card" class="number-card md-primary">
-                    <h1>{{card}}</h1>
-                </md-card>
-                <md-card md-with-hover v-else class="number-card">
-                    <h1>{{card}}</h1>
-                </md-card>
+    <div id="center-pain" class="md-layout-item md-size-70">
+        <md-content id="display">
+            <div id="result" v-if="waits.length == 0 && scores">
+                <span class="headline">result</span>
+                <div class="md-layout md-gutter md-alignment-center-left" v-for="r in result" :key="r[0]">
+                    <md-avatar class="md-avatar-icon md-large md-primary">
+                        <md-ripple>{{r[0]}}</md-ripple>
+                    </md-avatar>
+                    <md-ripple class="md-layout-item" v-for="mem in r[1]" :key="r[1]">{{mem}}</md-ripple>
+                </div>
             </div>
-        </div>
-        <md-button v-bind:class="{'md-primary': !isDecided, 'md-accent' : isDecided}" class="md-raised"
-            :disabled="isFinished || !number"
-            v-on:click="isDecided ? cancelOwnScore(playerId, scores) : updateScores(number, playerId, scores)">
-            {{ buttonText }}</md-button>
-    </div>
-    <hr />
-    <div id="result" v-if="waits.length == 0 && scores">
-        <h2>result</h2>
-        <div class="result-card" v-for="r in result" :key="r[0]">
-            <md-avatar class="md-avatar-icon md-large md-primary">
-                <md-ripple>{{r[0]}}</md-ripple>
-            </md-avatar>
-            <md-ripple v-for="mem in r[1]" :key="r[1]">{{mem}}</md-ripple>
-        </div>
-    </div>
-    <div class="box" v-else>
-        <div id="waiting">
-            <h2>waiting</h2>
-            <md-avatar class="md-avatar-icon md-large md-accent" v-for="w in waits" :key="w">
-                <md-tooltip md-direction="top">{{w}}</md-tooltip>
-                <md-ripple>{{w.slice(0, 2)}}</md-ripple>
-            </md-avatar>
-        </div>
-        <div id="decided">
-            <h2>decided</h2>
-            <md-avatar class="md-avatar-icon md-large md-primary" v-for="d in dones" :key="d">
-                <md-tooltip md-direction="top">{{d}}</md-tooltip>
-                <md-ripple>{{d.slice(0, 2)}}</md-ripple>
-            </md-avatar>
+            <div v-else class="md-layout md-gutter md-alignment-top-center">
+                <div class="md-layout-item">
+                    <h2 class="md-headline">waiting</h2>
+                    <md-avatar class="md-avatar-icon md-large md-accent" v-for="w in waits" :key="w">
+                        <md-tooltip md-direction="top">{{w}}</md-tooltip>
+                        <md-ripple>{{w.slice(0, 2)}}</md-ripple>
+                    </md-avatar>
+                </div>
+                <div class="md-layout-item">
+                    <h2 class="md-headline">decided</h2>
+                    <md-avatar class="md-avatar-icon md-large md-primary" v-for="d in dones" :key="d">
+                        <md-tooltip md-direction="top">{{d}}</md-tooltip>
+                        <md-ripple>{{d.slice(0, 2)}}</md-ripple>
+                    </md-avatar>
+                </div>
+            </div>
+        </md-content>
+        <div id="controller">
+            <div v-if="isOwner">
+                <md-button class="md-raised md-primary" v-on:click="resetGame()">reset!</md-button>
+                <div id="kick">
+                    <md-field id="kick">
+                        <label>Type user name.</label>
+                        <md-input v-model="kickTarget"></md-input>
+                    </md-field>
+                    <md-button class="md-raised md-primary" v-on:click="kickUser(kickTarget)">kick!</md-button>
+                </div>
+            </div>
+            <div v-else>
+                <div class="md-layout md-gutter md-alignment-center">
+                    <div v-for="card in cards" :key="card" @click="number = card">
+                        <md-card md-with-hover v-if="number == card" class="number-card md-primary">
+                            <h1>{{card}}</h1>
+                        </md-card>
+                        <md-card md-with-hover v-else class="number-card">
+                            <h1>{{card}}</h1>
+                        </md-card>
+                    </div>
+                </div>
+                <div class="md-layout md-alignment-center">
+                    <md-button v-bind:class="{'md-primary': !isDecided, 'md-accent' : isDecided}" class="md-raised"
+                        :disabled="isFinished || !number"
+                        v-on:click="isDecided ? cancelOwnScore(playerId, scores) : updateScores(number, playerId, scores)">
+                        {{ buttonText }}</md-button>
+                </div>
+            </div>
         </div>
     </div>
     <md-snackbar md-position="center" :md-active.sync="showSnackbar" md-persistent>

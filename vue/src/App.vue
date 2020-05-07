@@ -4,8 +4,19 @@
       <md-tab id="tab-home" md-label="Home" to="/home"></md-tab>
       <md-tab id="tab-about" md-label="About" to="/about"></md-tab>
     </md-tabs>
-    <div id="container">
-      <router-view></router-view>
+    <div id="app-body" class="md-layout md-alignment-center">
+      <div class="md-layout-item md-size-5">
+        <!--left space -->
+      </div>
+      <div id="container" class="md-layout-item md-size-90">
+        <div class="md-layout md-alignment-center">
+          <h1 class="md-title">{{title}}</h1>
+        </div>
+        <router-view></router-view>
+      </div>
+      <div class="md-layout-item md-size-5">
+        <!-- right space -->
+      </div>
     </div>
   </div>
 </template>
@@ -15,6 +26,11 @@ export default {
   name: "app",
   data() {
     return {};
+  },
+  computed: {
+    title: function() {
+      return this.$store.state.screenTitle;
+    }
   }
 };
 </script>
@@ -34,34 +50,20 @@ export default {
 );
 
 @import "~vue-material/dist/theme/all"; // Apply the theme
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-}
-
-h1,
-h2 {
-  font-weight: normal;
-}
-
-#container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.md-app {
-  max-height: 400px;
-  border: 1px solid rgba(#000, 0.12);
-}
 .md-title {
   margin-top: 70px;
   margin-bottom: 70px;
 }
-.box {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+body {
+  height: 100%;
+}
+#app-body {
+  height: 100%;
+}
+#app {
+  height: 100%;
+}
+#container {
+  height: 100%;
 }
 </style>

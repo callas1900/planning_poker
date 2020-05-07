@@ -1,14 +1,5 @@
-.result-card {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
 .md-avatar-icon {
   margin: 5px;
-}
-.number-card-container {
-  display: flex;
-  flex-direction: row;
 }
 .number-card {
   width: 50px;
@@ -21,4 +12,16 @@
 #kick {
   display: flex;
   flex-direction: row;;
+}
+#game-container {
+  height:100%;
+}
+#center-pain{
+  display: inline-flex;
+  height:70%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#display {
+  padding:10px;
 }
