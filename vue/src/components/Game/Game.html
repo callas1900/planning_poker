@@ -1,5 +1,5 @@
 <div id="game-container" class="md-layout md-gutter md-alignment-top-center">
-    <div class="md-layout-item md-size-20">
+    <div class="md-layout-item md-size-20 md-small-hide">
         <md-list>
             <md-subheader>owner</md-subheader>
             <md-list-item>
@@ -15,7 +15,7 @@
         </md-list>
     </div>
     <div id="center-pain" class="md-layout-item md-size-70">
-        <md-content>
+        <md-content id="display">
             <div id="result" v-if="waits.length == 0 && scores">
                 <span class="headline">result</span>
                 <div class="md-layout md-gutter md-alignment-center-left" v-for="r in result" :key="r[0]">
@@ -73,7 +73,7 @@
             </div>
         </div>
     </div>
-    <md-snackbar md-position="top" :md-active.sync="showSnackbar" md-persistent>
+    <md-snackbar md-position="center" :md-active.sync="showSnackbar" md-persistent>
         <span>{{message}}</span>
     </md-snackbar>
 </div>
