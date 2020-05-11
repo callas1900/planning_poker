@@ -1,6 +1,6 @@
 <template>
   <div class="md-layout md-alignment-center">
-    <div class="md-laytout-item md-size-50">
+    <div class="md-laytout-item">
       <h2>How to play</h2>
       <h3>Starting Game</h3>
       <ol>
@@ -32,6 +32,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-ul {
-}
 </style>

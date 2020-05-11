@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="main">
     <md-tabs class="md-primary" md-alignment="centered">
       <md-tab id="tab-home" md-label="Home" to="/home"></md-tab>
       <md-tab id="tab-about" md-label="About" to="/about"></md-tab>
@@ -50,20 +50,34 @@ export default {
 );
 
 @import "~vue-material/dist/theme/all"; // Apply the theme
-.md-title {
-  margin-top: 70px;
-  margin-bottom: 70px;
-}
 body {
   height: 100%;
+  overflow-x: hidden;
+}
+</style>
+
+<style lang="scss" scoped>
+@import "~vue-material/src/components/MdAnimation/variables";
+@import "~vue-material/src/components/MdLayout/mixins";
+@import "~vue-material/dist/theme/engine";
+
+#main {
+  height: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: $md-transition-default;
+  transition-property: padding-top;
 }
 #app-body {
   height: 100%;
-}
-#app {
-  height: 100%;
+  flex:1;
 }
 #container {
   height: 100%;
+}
+.md-title {
+  margin-top: 70px;
+  margin-bottom: 70px;
 }
 </style>
