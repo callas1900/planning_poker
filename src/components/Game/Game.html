@@ -56,10 +56,7 @@
             <div v-else>
                 <div class="md-layout md-gutter md-alignment-center">
                     <div v-for="card in cards" :key="card" @click="number = card">
-                        <md-card md-with-hover v-if="number == card" class="number-card md-primary">
-                            <h1>{{card}}</h1>
-                        </md-card>
-                        <md-card md-with-hover v-else class="number-card">
+                        <md-card md-with-hover :class="{ 'md-primary' : (number == card) }" class="number-card">
                             <h1>{{card}}</h1>
                         </md-card>
                     </div>
