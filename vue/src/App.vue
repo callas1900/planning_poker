@@ -71,7 +71,7 @@ body {
 }
 #app-body {
   height: 100%;
-  flex:1;
+  flex: 1;
 }
 #container {
   height: 100%;
@@ -79,5 +79,9 @@ body {
 .md-title {
   margin-top: 70px;
   margin-bottom: 70px;
+  @include md-layout-small {
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
 }
 </style>
