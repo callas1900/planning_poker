@@ -17,12 +17,12 @@
     <div id="center-pain" class="md-layout-item md-medium-size-70 md-small-size-100">
         <md-content id="display">
             <div id="result" v-if="waits.length == 0 && scores">
-                <span class="headline">result</span>
-                <div class="md-layout md-gutter md-alignment-center-left" v-for="r in result" :key="r[0]">
+                <h2 class="md-headline">result</h2>
+                <div class="md-layout md-alignment-center-left" v-for="r in result" :key="r[0]">
                     <md-avatar class="md-avatar-icon md-large md-primary">
                         <md-ripple>{{r[0]}}</md-ripple>
                     </md-avatar>
-                    <md-ripple class="md-layout-item" v-for="mem in r[1]" :key="r[1]">{{mem}}</md-ripple>
+                    <md-chip v-for="mem in r[1]" :key="r[1]">{{mem}}</md-chip>
                 </div>
             </div>
             <div v-else class="md-layout md-gutter md-alignment-top-center">
