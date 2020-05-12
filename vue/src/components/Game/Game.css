@@ -1,3 +1,4 @@
+@import "~vue-material/src/components/MdLayout/mixins";
 .md-avatar-icon {
   margin: 5px;
 }
@@ -24,4 +25,11 @@
 }
 #display {
   padding:10px;
+}
+.md-avatar.md-large {
+  @include md-layout-small {
+  min-height: 40px;
+  min-width: 40px;
+  font-size: 24px;
+  }
 }
