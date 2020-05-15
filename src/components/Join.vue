@@ -48,14 +48,14 @@ export default {
         .once("value")
         .then(function(snapshot) {
           let session = snapshot.val();
-          let owner = session && session.owner && session.owner[0];
+          let dealer = session && session.owner && session.owner[0];
           let isMembers = session.members && session.members !== undefined;
           let isSameMemeber = isMembers && session.members.includes(that.name);
-          if (owner && !isSameMemeber) {
+          if (dealer && !isSameMemeber) {
             console.log("achived");
             that.register(session, that);
             that.found = true;
-          } else if (!owner) {
+          } else if (!dealer) {
             that.message = "Code is not found!";
           } else if (isSameMemeber) {
             that.message = "name <" + that.name + "> already used";

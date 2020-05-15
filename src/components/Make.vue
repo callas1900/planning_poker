@@ -2,7 +2,7 @@
   <div>
     <md-field>
       <label>Type your name.</label>
-      <md-input v-model="owner"></md-input>
+      <md-input v-model="dealer"></md-input>
     </md-field>
     <md-field>
       <label>Change title if you want.</label>
@@ -12,7 +12,7 @@
       <label>Change card set if you want.</label>
       <md-input v-model="cards"></md-input>
     </md-field>
-    <md-button class="md-raised md-primary" @click="makeSession(owner, title, cards)">make!</md-button>
+    <md-button class="md-raised md-primary" @click="makeSession(dealer, title, cards)">make!</md-button>
     <md-card md-with-hover v-if="code">
       <md-card-header>
         <div class="md-title">Send your code to team members!</div>
@@ -24,7 +24,7 @@
         </div>
       </md-card-content>
       <md-card-actions>
-        <router-link :to="{name: 'owner', params: { code: code}, query: { is_owner: true}}">
+        <router-link :to="{name: 'dealer', params: { code: code}, query: { is_dealer: true}}">
           <h2>Go to the session</h2>
         </router-link>
       </md-card-actions>
@@ -40,17 +40,17 @@ export default {
   name: "make",
   data() {
     return {
-      owner: null,
+      dealer: null,
       code: null,
       title: "GAME",
       cards: "1,2,3,5,8,13,100"
     };
   },
   created() {
-    this.$store.dispatch('updateScreenTitle', "MAKING A SESSION")
+    this.$store.dispatch("updateScreenTitle", "MAKING A SESSION");
   },
   methods: {
-    makeSession: function(owner, title, cards) {
+    makeSession: function(dealer, title, cards) {
       let uuid = this.generateUuid();
       console.log(uuid);
       let code = uuid.split("-")[0];
@@ -58,16 +58,16 @@ export default {
         title: title,
         cards: [this.cards.split(",")]
       };
-      this.writeData(code, owner, uuid, prefs);
+      this.writeData(code, dealer, uuid, prefs);
       // read data
       let that = this;
       this.$database
         .ref("/plans/" + code)
         .once("value")
         .then(function(snapshot) {
-          let owner_from_db =
+          let dealer_from_db =
             snapshot.val() && snapshot.val().owner && snapshot.val().owner[0];
-          if (owner_from_db == owner) {
+          if (dealer_from_db == dealer) {
             console.log("achived");
             that.code = code;
           }
@@ -82,11 +82,10 @@ export default {
         return v.toString(16);
       });
     },
-    writeData: function(code, owner, uuid, prefs) {
+    writeData: function(code, dealer, uuid, prefs) {
       console.log(prefs);
-
       this.$database.ref("plans/" + code).set({
-        owner: [owner, uuid],
+        owner: [dealer, uuid],
         prefs: prefs
       });
     },

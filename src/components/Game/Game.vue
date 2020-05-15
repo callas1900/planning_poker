@@ -6,9 +6,9 @@ export default {
   name: "game",
   data() {
     return {
-      isOwner: false,
+      isDealer: false,
       playerId: null,
-      owner: null,
+      dealer: null,
       cards: null,
       number: null,
       members: [],
@@ -78,9 +78,9 @@ export default {
     }
   },
   mounted() {
-    if (this.$route.query && this.$route.query.is_owner) {
+    if (this.$route.query && this.$route.query.is_dealer) {
       this.code = this.$route.params.code; // vue router issue. when query param was set, props doesn't works well
-      this.isOwner = true;
+      this.isDealer = true;
     }
     this.getSettings(this.code);
     this.keepUpdatingMembers();
@@ -224,8 +224,8 @@ export default {
         .once("value")
         .then(function(snapshot) {
           let session = snapshot.val();
-          let owner = session && session.owner && session.owner[0];
-          that.owner = owner;
+          let dealer = session && session.owner && session.owner[0];
+          that.dealer = dealer;
           that.cards = session.prefs.cards[0];
           that.title = session.prefs.title;
           that.$store.dispatch('updateScreenTitle', that.title)

@@ -10,10 +10,6 @@
   align-items: center;
   justify-content: center;
 }
-#kick {
-  display: flex;
-  flex-direction: row;;
-}
 #game-container {
   height:100%;
 }

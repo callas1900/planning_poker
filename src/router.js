@@ -42,10 +42,10 @@ const routes = [
   },
   {
     path: '/game/:code',
-    name: 'owner',
+    name: 'dealer',
     component: Game,
     props: (route) => ({
-      query: route.query.is_owner
+      query: route.query.is_dealer
     }),
     tab: "home",
   },
