@@ -1,13 +1,13 @@
 <div id="game-container" class="md-layout md-gutter md-alignment-top-center">
     <div class="md-layout-item md-size-20 md-small-hide">
         <md-list>
-            <md-subheader>owner</md-subheader>
+            <md-subheader>Dealer</md-subheader>
             <md-list-item>
                 <md-icon>account_box</md-icon>
-                <span>{{ owner }}</span>
+                <span>{{ dealer }}</span>
             </md-list-item>
             <md-divider></md-divider>
-            <md-subheader>member</md-subheader>
+            <md-subheader>Member</md-subheader>
             <md-list-item v-for="member in members" :key="member">
                 <md-icon>account_box</md-icon>
                 <span>{{ member }}</span>
@@ -43,14 +43,27 @@
             </div>
         </md-content>
         <div id="controller">
-            <div v-if="isOwner">
-                <md-button class="md-raised md-primary" v-on:click="resetGame()">reset!</md-button>
-                <div id="kick">
-                    <md-field id="kick">
-                        <label>Type user name.</label>
+            <div v-if="isDealer">
+                <div class="md-layout md-gutter md-alignment-center-right">
+                    <div class="md-layout-item"></div>
+                    <md-button class="md-raised md-primary md-layout-item md-size-30" v-on:click="resetGame()">reset!
+                    </md-button>
+                    <div class="md-layout-item md-size-10">
+                        <md-icon>info</md-icon>
+                        <md-tooltip md-direction="top">Reset current game for new game session</md-tooltip>
+                    </div>
+                </div>
+                <div class="md-layout md-gutter md-alignment-center-right">
+                    <md-field class="md-layout-item">
+                        <label>Type target user name.</label>
                         <md-input v-model="kickTarget"></md-input>
                     </md-field>
-                    <md-button class="md-raised md-primary" v-on:click="kickUser(kickTarget)">kick!</md-button>
+                    <md-button class="md-raised md-primary md-layout-item md-size-30" v-on:click="kickUser(kickTarget)">
+                        kick!</md-button>
+                    <div class="md-layout-item md-size-10">
+                        <md-icon>info</md-icon>
+                        <md-tooltip md-direction="top">Kick an user out if you want</md-tooltip>
+                    </div>
                 </div>
             </div>
             <div v-else>
