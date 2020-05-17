@@ -44,8 +44,9 @@ const routes = [
     path: '/game/:code',
     name: 'dealer',
     component: Game,
-    props: (route) => ({
-      query: route.query.is_dealer
+    props: route => ({
+      code: route.params.code,
+      query: route.query
     }),
     tab: "home",
   },
@@ -68,7 +69,7 @@ const router = new Router({
       // cache home tab
       if (route.tab != "home") {
         store.dispatch('updateHomeTab', from)
-      } 
+      }
       // apply cached home tab then remove it
       if (route.name == "dummy") {
         next(store.state.homeTab.route || routes[0])
