@@ -2,7 +2,7 @@
 
 <script>
 export default {
-  props: ["code", "player"],
+  props: ["code", "player", "query"],
   name: "game",
   data() {
     return {
@@ -78,8 +78,7 @@ export default {
     }
   },
   mounted() {
-    if (this.$route.query && this.$route.query.is_dealer) {
-      this.code = this.$route.params.code; // vue router issue. when query param was set, props doesn't works well
+    if (this.query && this.query.is_dealer) {
       this.isDealer = true;
     }
     this.getSettings(this.code);
