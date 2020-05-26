@@ -13,7 +13,7 @@ export default {
       number: null,
       members: [],
       scores: null,
-      title: "GAME",
+      title: null,
       kickTarget: null
     };
   },
@@ -77,6 +77,11 @@ export default {
       return !this.isFinished && this.isDecided ? "CANCEL..." : "FIGHT!";
     }
   },
+  watch: {
+    title: function(newTitle, oldTitle) {
+      this.$store.dispatch("updateScreenTitle", newTitle);
+    }
+  },
   mounted() {
     if (this.query && this.query.is_dealer) {
       this.isDealer = true;
@@ -84,6 +89,7 @@ export default {
     this.getSettings(this.code);
     this.keepUpdatingMembers();
     this.keepUpdatingScores();
+    this.keepUpdatingTitle();
     this.keepUpdatingMessage();
   },
   methods: {
@@ -107,6 +113,12 @@ export default {
         }
       }
       this.$database.ref("plans/" + this.code + "/members/").set(this.members);
+    },
+    changeTitle: function(title) {
+      if (!title || title === undefined) {
+        title = "";
+      }
+      this.$database.ref("/plans/" + this.code + "/prefs/title").set(title);
     },
     updateScores: function(number, playerId, scores) {
       if (!scores || scores === undefined) {
@@ -156,6 +168,19 @@ export default {
           let message = snapshot.val();
           if (message && message !== undefined) {
             that.snackbar(message, that);
+          }
+        },
+        that
+      );
+    },
+    keepUpdatingTitle: function() {
+      let that = this;
+      this.$database.ref("/plans/" + this.code + "/prefs/title").on(
+        "value",
+        function(snapshot) {
+          let title = snapshot.val();
+          if (title && title !== undefined) {
+            that.title = title;
           }
         },
         that
@@ -226,8 +251,7 @@ export default {
           let dealer = session && session.owner && session.owner[0];
           that.dealer = dealer;
           that.cards = session.prefs.cards[0];
-          that.title = session.prefs.title;
-          that.$store.dispatch('updateScreenTitle', that.title)
+          // that.title = session.prefs.title;
         }, that);
     },
     getIds: function(scores) {
