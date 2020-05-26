@@ -55,6 +55,18 @@
                 </div>
                 <div class="md-layout md-gutter md-alignment-center-right">
                     <md-field class="md-layout-item">
+                        <label>Change title.</label>
+                        <md-input v-model="title"></md-input>
+                    </md-field>
+                    <md-button class="md-raised md-primary md-layout-item md-size-30" v-on:click="changeTitle(title)">
+                        CHANGE!</md-button>
+                    <div class="md-layout-item md-size-10">
+                        <md-icon>info</md-icon>
+                        <md-tooltip md-direction="top">Kick an user out if you want</md-tooltip>
+                    </div>
+                </div>
+                <div class="md-layout md-gutter md-alignment-center-right">
+                    <md-field class="md-layout-item">
                         <label>Type target user name.</label>
                         <md-input v-model="kickTarget"></md-input>
                     </md-field>
