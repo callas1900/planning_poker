@@ -3,7 +3,6 @@ node_modules/
 dist/*.js*
 npm-debug.log
 yarn-error.log
-src/firebase/init.js
 *.log
 .firebase/*
 
