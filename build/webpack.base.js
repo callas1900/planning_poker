@@ -10,7 +10,6 @@ const devMode = process.env.NODE_ENV !== 'production';
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
-
 module.exports = {
   context: resolve(''),
   entry: {
@@ -90,7 +89,7 @@ module.exports = {
           },
           'css-loader',
           // 'postcss-loader',
-          // 'sass-loader',
+          'sass-loader',
         ],
       },
       {
