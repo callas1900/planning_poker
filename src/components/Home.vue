@@ -25,17 +25,16 @@
   </div>
 </template>
 
-
 <script>
 export default {
-  name: "home",
-  data() {
-    return {};
+  name: 'home',
+  data () {
+    return {}
   },
-  created() {
-    this.$store.dispatch('updateScreenTitle', "PLANNING POKER")
+  created () {
+    this.$store.dispatch('updateScreenTitle', 'PLANNING POKER')
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

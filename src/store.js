@@ -6,26 +6,26 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     homeTab: {
-      route: null,
+      route: null
     },
     screenTitle: null
   },
   mutations: {
-    updateHomeTab(state, payload) {
+    updateHomeTab (state, payload) {
       state.homeTab.route = payload
     },
-    updateScreenTitle(state, title) {
+    updateScreenTitle (state, title) {
       state.screenTitle = title
     }
   },
   actions: {
-    updateHomeTab({ commit }, payload) {
+    updateHomeTab ({ commit }, payload) {
       commit('updateHomeTab', payload)
     },
-    clearHomeTab({ commit }) {
+    clearHomeTab ({ commit }) {
       commit('updateHomeTab', null)
     },
-    updateScreenTitle({ commit }, title) {
+    updateScreenTitle ({ commit }, title) {
       commit('updateScreenTitle', title)
     }
   }

@@ -33,6 +33,7 @@ module.exports = {
         "exports": "never",
         "functions": "never"
     }],
-    "no-new": 'off'
+    "no-new": 'off',
+    "one-var": 'off'
   }
 }

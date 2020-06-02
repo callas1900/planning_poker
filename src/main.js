@@ -10,24 +10,24 @@ import App from './App.vue'
 Vue.use(VueMaterial)
 Vue.use(VueClipboard)
 
-const { firebaseConfig } = require('./firebase/init.js');
-const database = Firebase.initializeApp(firebaseConfig).database();
-Vue.prototype.$database = database;
+const { firebaseConfig } = require('./firebase/init.js')
+const database = Firebase.initializeApp(firebaseConfig).database()
+Vue.prototype.$database = database
 
 Vue.mixin({
-  data() {
+  data () {
     return {
       showSnackbar: false,
       message: null
-    };
+    }
   },
   methods: {
     snackbar: function (message, that) {
       if (!that) {
-        that = this;
+        that = this
       }
-      that.message = message;
-      that.showSnackbar = true;
+      that.message = message
+      that.showSnackbar = true
     },
   }
 })
