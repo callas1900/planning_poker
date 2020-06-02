@@ -4,7 +4,7 @@
       <md-card-header>
         <div class="md-title">Make a session</div>
       </md-card-header>
-      <md-card-content>If you are a dealer, please make a session. Then you will provide a session code to your team member.</md-card-content>
+      <md-card-content>Make a session if you wanna be a dealer. Then you gonna show up a code.</md-card-content>
       <md-card-actions>
         <router-link :to="{name: 'make'}">
           <md-button class="md-raised md-primary">MAKE!</md-button>
@@ -15,7 +15,7 @@
       <md-card-header>
         <div class="md-title">Join a session</div>
       </md-card-header>
-      <md-card-content>If you are a team member. Please get a session code from your dealer to join a session.</md-card-content>
+      <md-card-content>Get a code of a session from your dealer to enjoy.</md-card-content>
       <md-card-actions>
         <router-link :to="{name: 'join'}">
           <md-button class="md-raised md-primary">JOIN!</md-button>

@@ -5,7 +5,6 @@ dist/css/*.css*
 dist/index.html
 npm-debug.log
 yarn-error.log
-src/firebase/init.js
 *.log
 .firebase/*
 
