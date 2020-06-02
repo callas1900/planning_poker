@@ -18,17 +18,16 @@
   </div>
 </template>
 
-
 <script>
 export default {
-  name: "about",
-  data() {
-    return {};
+  name: 'about',
+  data () {
+    return {}
   },
-  created() {
-    this.$store.dispatch('updateScreenTitle', "ABOUT")
+  created () {
+    this.$store.dispatch('updateScreenTitle', 'ABOUT')
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

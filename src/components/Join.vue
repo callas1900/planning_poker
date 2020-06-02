@@ -27,56 +27,55 @@
 
 <script>
 export default {
-  name: "join",
-  data() {
+  name: 'join',
+  data () {
     return {
       code: null,
       name: null,
       found: false,
       message: null
-    };
+    }
   },
-  created() {
-    this.$store.dispatch('updateScreenTitle', "ABOUT")
+  created () {
+    this.$store.dispatch('updateScreenTitle', 'ABOUT')
   },
   methods: {
-    join: function(code) {
-      this.message = null;
-      let that = this;
+    join: function (code) {
+      this.message = null
+      const that = this
       this.$database
-        .ref("/plans/" + code)
-        .once("value")
-        .then(function(snapshot) {
-          let session = snapshot.val();
-          let dealer = session && session.owner && session.owner[0];
-          let isMembers = session.members && session.members !== undefined;
-          let isSameMemeber = isMembers && session.members.includes(that.name);
+        .ref('/plans/' + code)
+        .once('value')
+        .then(function (snapshot) {
+          const session = snapshot.val()
+          const dealer = session && session.owner && session.owner[0]
+          const isMembers = session.members && session.members !== undefined
+          const isSameMemeber = isMembers && session.members.includes(that.name)
           if (dealer && !isSameMemeber) {
-            console.log("achived");
-            that.register(session, that);
-            that.found = true;
+            console.log('achived')
+            that.register(session, that)
+            that.found = true
           } else if (!dealer) {
-            that.message = "Code is not found!";
+            that.message = 'Code is not found!'
           } else if (isSameMemeber) {
-            that.message = "name <" + that.name + "> already used";
+            that.message = 'name <' + that.name + '> already used'
           } else {
-            that.message = "error";
+            that.message = 'error'
           }
-        }, that);
+        }, that)
     },
-    register: function(session, that) {
-      console.log("---------");
-      let code = that.code;
-      let name = that.name;
-      let members = session.members;
+    register: function (session, that) {
+      console.log('---------')
+      const code = that.code
+      let members = session.members
       if (!members || members === undefined) {
-        members = [];
+        members = []
       }
-      members.push(that.name);
-      this.$database.ref("plans/" + code + "/members/").set(members);
+      members.push(that.name)
+      this.$database.ref('plans/' + code + '/members/').set(members)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

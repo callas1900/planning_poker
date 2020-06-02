@@ -37,72 +37,72 @@
 
 <script>
 export default {
-  name: "make",
-  data() {
+  name: 'make',
+  data () {
     return {
       dealer: null,
       code: null,
-      title: "GAME",
-      cards: "1,2,3,5,8,13,100"
-    };
+      title: 'GAME',
+      cards: '1,2,3,5,8,13,100'
+    }
   },
-  created() {
-    this.$store.dispatch("updateScreenTitle", "MAKING A SESSION");
+  created () {
+    this.$store.dispatch('updateScreenTitle', 'MAKING A SESSION')
   },
   methods: {
-    makeSession: function(dealer, title, cards) {
-      let uuid = this.generateUuid();
-      console.log(uuid);
-      let code = uuid.split("-")[0];
-      let prefs = {
+    makeSession: function (dealer, title, cards) {
+      const uuid = this.generateUuid()
+      console.log(uuid)
+      const code = uuid.split('-')[0]
+      const prefs = {
         title: title,
-        cards: [this.cards.split(",")]
-      };
-      this.writeData(code, dealer, uuid, prefs);
+        cards: [this.cards.split(',')]
+      }
+      this.writeData(code, dealer, uuid, prefs)
       // read data
-      let that = this;
+      const that = this
       this.$database
-        .ref("/plans/" + code)
-        .once("value")
-        .then(function(snapshot) {
-          let dealer_from_db =
-            snapshot.val() && snapshot.val().owner && snapshot.val().owner[0];
-          if (dealer_from_db == dealer) {
-            console.log("achived");
-            that.code = code;
+        .ref('/plans/' + code)
+        .once('value')
+        .then(function (snapshot) {
+          const dealerFromDb =
+            snapshot.val() && snapshot.val().owner && snapshot.val().owner[0]
+          if (dealerFromDb === dealer) {
+            console.log('achived')
+            that.code = code
           }
-        }, that);
+        }, that)
     },
-    generateUuid: function() {
-      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(
+    generateUuid: function () {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (
         c
       ) {
         var r = (Math.random() * 16) | 0,
-          v = c == "x" ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-      });
+          v = c === 'x' ? r : (r & 0x3) | 0x8
+        return v.toString(16)
+      })
     },
-    writeData: function(code, dealer, uuid, prefs) {
-      console.log(prefs);
-      this.$database.ref("plans/" + code).set({
+    writeData: function (code, dealer, uuid, prefs) {
+      console.log(prefs)
+      this.$database.ref('plans/' + code).set({
         owner: [dealer, uuid],
         prefs: prefs
-      });
+      })
     },
-    copyToClipBoard: function(code) {
-      let that = this;
+    copyToClipBoard: function (code) {
+      const that = this
       this.$copyText(code).then(
-        function(e) {
-          that.snackbar("Code was copied!", that);
-          console.log(e);
+        function (e) {
+          that.snackbar('Code was copied!', that)
+          console.log(e)
         },
-        function(e) {
-          console.log(e);
+        function (e) {
+          console.log(e)
         }
-      );
+      )
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

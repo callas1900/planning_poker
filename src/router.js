@@ -14,31 +14,31 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home,
-    tab: "home",
+    tab: 'home',
   },
   {
     path: '/home',
     name: 'dummy',
-    tab: "home",
+    tab: 'home',
   },
   {
     path: '/make',
     name: 'make',
     component: Make,
-    tab: "home",
+    tab: 'home',
   },
   {
     path: '/join',
     name: 'join',
     component: Join,
-    tab: "home",
+    tab: 'home',
   },
   {
     path: '/game/:code/:player',
     name: 'game',
     component: Game,
     props: true,
-    tab: "home",
+    tab: 'home',
   },
   {
     path: '/game/:code',
@@ -48,13 +48,13 @@ const routes = [
       code: route.params.code,
       query: route.query
     }),
-    tab: "home",
+    tab: 'home',
   },
   {
     path: '/about/',
     name: 'about',
     component: About,
-    tab: "about",
+    tab: 'about',
   },
 ]
 
@@ -67,11 +67,11 @@ const router = new Router({
     props: route.props,
     beforeEnter: (to, from, next) => {
       // cache home tab
-      if (route.tab != "home") {
+      if (route.tab !== 'home') {
         store.dispatch('updateHomeTab', from)
       }
       // apply cached home tab then remove it
-      if (route.name == "dummy") {
+      if (route.name === 'dummy') {
         next(store.state.homeTab.route || routes[0])
         store.dispatch('clearHomeTab')
       } else {

@@ -23,16 +23,16 @@
 
 <script>
 export default {
-  name: "app",
-  data() {
-    return {};
+  name: 'app',
+  data () {
+    return {}
   },
   computed: {
-    title: function() {
-      return this.$store.state.screenTitle;
+    title: function () {
+      return this.$store.state.screenTitle
     }
   }
-};
+}
 </script>
 
 <style lang="scss">
