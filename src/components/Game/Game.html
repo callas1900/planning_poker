@@ -80,7 +80,7 @@
             </div>
             <div v-else>
                 <div class="md-layout md-gutter md-alignment-center">
-                    <div v-for="card in cards" :key="card" @click="selectedCard = card">
+                    <div v-for="card in cards" :key="card" @click="if (!isDecided) { selectedCard = card }">
                         <md-card md-with-hover :class="{ 'md-primary' : (selectedCard == card) }" class="number-card">
                             <h1>{{card}}</h1>
                         </md-card>
