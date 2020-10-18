@@ -10,7 +10,7 @@ export default {
       playerId: null,
       dealer: null,
       cards: null,
-      number: null,
+      selectedCard: null,
       members: [],
       scores: null,
       title: null,
@@ -155,10 +155,21 @@ export default {
           const scores = snapshot.val()
           if (scores !== undefined) {
             that.scores = scores
+            that.initializeSelectedCard(scores, that.playerId, that)
           }
         },
         that
       )
+    },
+    initializeSelectedCard: function (scores, playerId, that) {
+      if (that.selectedCard == null) {
+        for (const score of scores) {
+          console.log(score)
+          if (score[0] === playerId) {
+            that.selectedCard = score[1]
+          }
+        }
+      }
     },
     keepUpdatingMessage: function () {
       const that = this

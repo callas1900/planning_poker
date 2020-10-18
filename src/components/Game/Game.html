@@ -80,16 +80,16 @@
             </div>
             <div v-else>
                 <div class="md-layout md-gutter md-alignment-center">
-                    <div v-for="card in cards" :key="card" @click="number = card">
-                        <md-card md-with-hover :class="{ 'md-primary' : (number == card) }" class="number-card">
+                    <div v-for="card in cards" :key="card" @click="if (!isDecided) { selectedCard = card }">
+                        <md-card md-with-hover :class="{ 'md-primary' : (selectedCard == card) }" class="number-card">
                             <h1>{{card}}</h1>
                         </md-card>
                     </div>
                 </div>
                 <div class="md-layout md-alignment-center">
                     <md-button v-bind:class="{'md-primary': !isDecided, 'md-accent' : isDecided}" class="md-raised"
-                        :disabled="isFinished || !number"
-                        v-on:click="isDecided ? cancelOwnScore(playerId, scores) : updateScores(number, playerId, scores)">
+                        :disabled="isFinished || !selectedCard"
+                        @click="isDecided ? cancelOwnScore(playerId, scores) : updateScores(selectedCard, playerId, scores)">
                         {{ buttonText }}</md-button>
                 </div>
             </div>
