@@ -109,6 +109,7 @@ export default {
         if (kickTarget === member) {
           this.members.splice(i, 1)
           this.kickTarget = null
+          this.removeScoreById(i, this.scores)
           break
         }
       }
@@ -127,7 +128,7 @@ export default {
       scores.push([playerId, number])
       this.writeScore(scores)
     },
-    cancelOwnScore: function (playerId, scores) {
+    removeScoreById: function (playerId, scores) {
       if (!this.scores || this.scores === undefined) {
         return
       }

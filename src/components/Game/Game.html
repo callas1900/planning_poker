@@ -89,7 +89,7 @@
                 <div class="md-layout md-alignment-center">
                     <md-button v-bind:class="{'md-primary': !isDecided, 'md-accent' : isDecided}" class="md-raised"
                         :disabled="isFinished || !selectedCard"
-                        @click="isDecided ? cancelOwnScore(playerId, scores) : updateScores(selectedCard, playerId, scores)">
+                        @click="isDecided ? removeScoreById(playerId, scores) : updateScores(selectedCard, playerId, scores)">
                         {{ buttonText }}</md-button>
                 </div>
             </div>
