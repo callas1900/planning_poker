@@ -1,12 +1,16 @@
 <template src="./Game.html"></template>
 
 <script>
+const MODE_VIEWER = 0
+const MODE_DEALER = 1
+const MODE_PLAYER = 2
+
 export default {
   props: ['code', 'player', 'query'],
   name: 'game',
   data () {
     return {
-      isDealer: false,
+      mode: MODE_VIEWER,
       playerId: null,
       dealer: null,
       cards: null,
@@ -18,6 +22,15 @@ export default {
     }
   },
   computed: {
+    isDealer: function () {
+      return this.mode === MODE_DEALER
+    },
+    isPlayer: function () {
+      return this.mode === MODE_PLAYER
+    },
+    isViewer: function () {
+      return this.mode === MODE_VIEWER
+    },
     result: function () {
       if (this.waits.length !== 0 || !this.scores || this.scores === undefined) {
         return []
@@ -84,7 +97,7 @@ export default {
   },
   mounted () {
     if (this.query && this.query.is_dealer) {
-      this.isDealer = true
+      this.mode = MODE_DEALER
     }
     this.getSettings(this.code)
     this.keepUpdatingMembers()
@@ -209,6 +222,7 @@ export default {
               const member = members[i]
               if (that.player === member) {
                 that.playerId = i
+                that.mode = MODE_PLAYER
               }
             }
             if (

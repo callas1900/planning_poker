@@ -78,7 +78,7 @@
                     </div>
                 </div>
             </div>
-            <div v-else>
+            <div v-else-if="isPlayer">
                 <div class="md-layout md-gutter md-alignment-center">
                     <div v-for="card in cards" :key="card" @click="if (!isDecided) { selectedCard = card }">
                         <md-card md-with-hover :class="{ 'md-primary' : (selectedCard == card) }" class="number-card">
@@ -92,6 +92,9 @@
                         @click="isDecided ? removeScoreById(playerId, scores) : updateScores(selectedCard, playerId, scores)">
                         {{ buttonText }}</md-button>
                 </div>
+            </div>
+            <div v-else-if="isViewer">
+                you are viewer
             </div>
         </div>
     </div>
