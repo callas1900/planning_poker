@@ -15,9 +15,14 @@
     <md-button class="md-raised md-primary" @click="makeSession(dealer, title, cards)">make!</md-button>
     <md-card md-with-hover v-if="code">
       <md-card-header>
-        <div class="md-title">Send your code to team members!</div>
+        <div class="md-title">Click URL or code to copy it. Then send it to the team members!</div>
       </md-card-header>
       <md-card-content>
+        <div id="code-contaienr" @click="copyToClipBoard(url)" v-if="url">
+          <h1>{{url}}</h1>
+          <md-icon>assignment</md-icon>
+        </div>
+        <h3></h3>
         <div id="code-contaienr" @click="copyToClipBoard(code)">
           <h1>{{code}}</h1>
           <md-icon>assignment</md-icon>
@@ -43,11 +48,14 @@ export default {
       dealer: null,
       code: null,
       title: 'GAME',
-      cards: '1,2,3,5,8,13,100'
+      cards: '1,2,3,5,8,13,100',
+      url_origin: null,
+      url: null
     }
   },
   created () {
     this.$store.dispatch('updateScreenTitle', 'MAKING A SESSION')
+    this.url_origin = window.location.origin
   },
   methods: {
     makeSession: function (dealer, title, cards) {
@@ -70,6 +78,9 @@ export default {
           if (dealerFromDb === dealer) {
             console.log('achived')
             that.code = code
+            if (that.url_origin) {
+              that.url = that.url_origin + '/#/join?c=' + code
+            }
           }
         }, that)
     },
