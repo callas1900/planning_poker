@@ -7,13 +7,17 @@
       </router-link>
     </div>
     <div v-else>
-      <md-field>
+      <md-field v-if="code">
+        <label>Your provided code.</label>
+        <md-input v-model="code" disabled></md-input>
+      </md-field>
+      <md-field v-else>
         <label>Input provided code.</label>
         <md-input v-model="code"></md-input>
       </md-field>
       <md-field>
         <label>Type your name.</label>
-        <md-input v-model="name"></md-input>
+        <md-input v-model="name" ref="nameInput"></md-input>
       </md-field>
       <md-button
         class="md-raised md-primary"
@@ -39,9 +43,11 @@ export default {
   },
   created () {
     this.$store.dispatch('updateScreenTitle', 'JOIN')
+  },
+  mounted () {
     if (this.query && this.query.c) {
-      console.log(this.query.c)
       this.code = this.query.c
+      this.$refs.nameInput.$el.focus()
     }
   },
   methods: {
