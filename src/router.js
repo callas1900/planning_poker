@@ -31,6 +31,9 @@ const routes = [
     path: '/join',
     name: 'join',
     component: Join,
+    props: route => ({
+      query: route.query
+    }),
     tab: 'home',
   },
   {
