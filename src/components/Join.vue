@@ -88,6 +88,9 @@ export default {
             that.message = 'same name was already used'
             that.hasNameError = true
           } else {
+            that.hasCodeError = true
+            that.hasNameError = true
+            that.isProvidedCode = false
             that.message = 'error'
           }
         }, that)
