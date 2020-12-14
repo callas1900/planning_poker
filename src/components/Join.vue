@@ -27,6 +27,7 @@
 
 <script>
 export default {
+  props: ['query'],
   name: 'join',
   data () {
     return {
@@ -37,7 +38,11 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('updateScreenTitle', 'ABOUT')
+    this.$store.dispatch('updateScreenTitle', 'JOIN')
+    if (this.query && this.query.c) {
+      console.log(this.query.c)
+      this.code = this.query.c
+    }
   },
   methods: {
     join: function (code) {
