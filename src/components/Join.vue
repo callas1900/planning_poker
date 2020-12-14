@@ -7,14 +7,17 @@
         <md-input v-model="code" :disabled="isProvidedCode"></md-input>
         <span class="md-error">{{message}}</span>
       </md-field>
-      <md-field :class="messageNameClass">
+      <md-field :class="messageNameClass" v-if="!viewer">
         <label>Type your name.</label>
         <md-input v-model="name" ref="nameInput"></md-input>
         <span class="md-error">{{message}}</span>
       </md-field>
+      <div>
+        <md-checkbox v-model="viewer">You want to be viewer</md-checkbox>
+      </div>
       <md-button
         class="md-raised md-primary"
-        :disabled="!(code && name)"
+        :disabled="!(code && (name || viewer))"
         v-on:click="join(code)"
       >join!</md-button>
     </div>
@@ -33,6 +36,7 @@ export default {
       isProvidedCode: false,
       hasCodeError: false,
       hasNameError: false,
+      viewer: false
     }
   },
   created () {
@@ -57,6 +61,13 @@ export default {
       }
     }
   },
+  watch: {
+    viewer: function (newValue, oldValue) {
+      if (newValue) {
+        this.name = null
+      }
+    }
+  },
   methods: {
     join: function (code) {
       this.clearMessages()
@@ -71,7 +82,9 @@ export default {
           const isSameMemeber = isMembers && session.members.includes(that.name)
           if (dealer && !isSameMemeber) {
             console.log('achived')
-            that.register(session, that)
+            if (!that.viewer) {
+              that.register(session, that)
+            }
             that.$router.push({ name: 'game', params: { code: that.code, player: that.name } })
           } else if (!dealer) {
             that.message = 'Code is not found!'
