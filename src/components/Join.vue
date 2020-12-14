@@ -7,13 +7,10 @@
       </router-link>
     </div>
     <div v-else>
-      <md-field v-if="code">
-        <label>Your provided code.</label>
-        <md-input v-model="code" disabled></md-input>
-      </md-field>
-      <md-field v-else>
-        <label>Input provided code.</label>
-        <md-input v-model="code"></md-input>
+      <md-field>
+        <label v-if="isProvidedCode">Your provided code.</label>
+        <label v-else>Input provided code.</label>
+        <md-input v-model="code" :disabled="isProvidedCode"></md-input>
       </md-field>
       <md-field>
         <label>Type your name.</label>
@@ -38,7 +35,8 @@ export default {
       code: null,
       name: null,
       found: false,
-      message: null
+      message: null,
+      isProvidedCode: false,
     }
   },
   created () {
@@ -47,6 +45,7 @@ export default {
   mounted () {
     if (this.query && this.query.c) {
       this.code = this.query.c
+      this.isProvidedCode = true
       this.$refs.nameInput.$el.focus()
     }
   },
