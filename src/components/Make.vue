@@ -104,7 +104,7 @@ export default {
       const that = this
       this.$copyText(code).then(
         function (e) {
-          that.snackbar('Code was copied!', that)
+          that.snackbar('Copied!', that)
           console.log(e)
         },
         function (e) {
