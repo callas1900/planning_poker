@@ -14,6 +14,11 @@
         <li>The result is sorted numbers with member's name.</li>
         <li>Dealer can reset the game.</li>
       </ul>
+      <h2>Legal Disclaimer</h2>
+      <p>This application doesn't have strong security. Please do not put your confidential information.</p>
+      <h2>Feedback</h2>
+      <p>Please feel free to give me feedback.</p>
+      <a href="https://github.com/callas1900/planning_poker/issues">https://github.com/callas1900/planning_poker/issues</a>
     </div>
   </div>
 </template>
