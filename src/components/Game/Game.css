@@ -32,3 +32,10 @@
 h2.md-headline {
   text-align: center;
 }
+.viewer-card {
+  width: 320px;
+  margin: 4px;
+  padding: 10px;
+  display: inline-block;
+  vertical-align: top;
+}

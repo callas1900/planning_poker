@@ -93,8 +93,21 @@
                         {{ buttonText }}</md-button>
                 </div>
             </div>
-            <div v-else-if="isViewer">
-                you are viewer
+            <div class="md-layout md-gutter md-alignment-center" v-else-if="isViewer">
+                <md-card class="md-accent viewer-card" md-with-hover>
+                    <md-card-header-text>
+                      <div class="md-title">Viewer Mode</div>
+                      <div class="md-subhead"></div>
+                    </md-card-header-text>
+                    <md-card-content>
+                    You are viewer if you want to join this session, click below button.
+                    </md-card-content>
+                    <md-card-actions md-alignment="left">
+                        <router-link :to="{name: 'join', query: { c: code }}">
+                            <md-button class="md-primary md-raised">JOIN this session</md-button>
+                        </router-link>
+                    </md-card-actions>
+                </md-card>
             </div>
         </div>
     </div>
