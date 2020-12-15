@@ -96,9 +96,7 @@ export default {
     }
   },
   mounted () {
-    if (this.query && this.query.is_dealer) {
-      this.mode = MODE_DEALER
-    }
+    this.initMode(this)
     this.getSettings(this.code)
     this.keepUpdatingMembers()
     this.keepUpdatingScores()
@@ -220,7 +218,7 @@ export default {
           if (members && members !== undefined) {
             // initialize
             that.playerId = null
-            that.mode = MODE_VIEWER
+            that.initMode(that)
             for (const i in members) {
               const member = members[i]
               if (that.player === member) {
@@ -289,6 +287,9 @@ export default {
         ids.push(Number(score[0]))
       }
       return ids
+    },
+    initMode: function (that) {
+      that.mode = that.query && that.query.is_dealer ? MODE_DEALER : MODE_VIEWER
     }
   }
 }
