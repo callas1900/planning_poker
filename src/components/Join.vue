@@ -1,12 +1,6 @@
 <template>
   <div>
-    <div v-if="found">
-      <h2>Congratulations! Success to find your session!</h2>
-      <router-link :to="{name: 'game', params: { code: code, player: name}}">
-        <h2>Go to the session</h2>
-      </router-link>
-    </div>
-    <div v-else>
+    <div>
       <md-field :class="messageCodeClass">
         <label v-if="isProvidedCode">Your provided code.</label>
         <label v-else>Input provided code.</label>
@@ -35,7 +29,6 @@ export default {
     return {
       code: null,
       name: null,
-      found: false,
       message: null,
       isProvidedCode: false,
       hasCodeError: false,
@@ -79,7 +72,7 @@ export default {
           if (dealer && !isSameMemeber) {
             console.log('achived')
             that.register(session, that)
-            that.found = true
+            that.$router.push({ name: 'game', params: { code: that.code, player: that.name } })
           } else if (!dealer) {
             that.message = 'Code is not found!'
             that.hasCodeError = true
