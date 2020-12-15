@@ -218,6 +218,9 @@ export default {
         function (snapshot) {
           const members = snapshot.val()
           if (members && members !== undefined) {
+            // initialize
+            that.playerId = null
+            that.mode = MODE_VIEWER
             for (const i in members) {
               const member = members[i]
               if (that.player === member) {
