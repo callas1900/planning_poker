@@ -277,8 +277,16 @@ export default {
           const session = snapshot.val()
           const dealer = session && session.owner && session.owner[0]
           that.dealer = dealer
-          that.cards = session.prefs.cards[0]
-          // that.title = session.prefs.title
+          const cards = session.prefs.cards[0]
+          let aliases = session.prefs.aliases
+          if (aliases === null) {
+            aliases = that.cards
+          }
+          const pairs = []
+          for (var i = 0; i < cards.length; i++) {
+            pairs.push([cards[i], aliases[i]])
+          }
+          that.cards = pairs
         }, that)
     },
     getIds: function (scores) {
