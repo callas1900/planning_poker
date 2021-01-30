@@ -27,7 +27,7 @@
       <label>Change card set if you want.</label>
       <md-input v-model="cards"></md-input>
     </md-field>
-    <md-button class="md-raised md-primary" @click="makeSession(dealer, title, cards, aliases)">make!</md-button>
+    <md-button class="md-raised md-primary" @click="makeSession(dealer, title, cards, aliases, card_type)">make!</md-button>
     <md-card md-with-hover v-if="code">
       <md-card-header>
         <div class="md-title">Click URL or code to copy it. Then send it to the team members!</div>
@@ -102,7 +102,7 @@ export default {
     },
   },
   methods: {
-    makeSession: function (dealer, title, cards, aliases) {
+    makeSession: function (dealer, title, cards, aliases, type) {
       const uuid = this.generateUuid()
       console.log(uuid)
       const code = uuid.split('-')[0]
@@ -110,6 +110,7 @@ export default {
         title: title,
         cards: [this.cards.split(',')],
         aliases: aliases
+        type: type
       }
       this.writeData(code, dealer, uuid, prefs)
       // read data

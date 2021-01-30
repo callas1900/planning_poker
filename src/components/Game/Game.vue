@@ -287,6 +287,7 @@ export default {
             pairs.push([cards[i], aliases[i]])
           }
           that.cards = pairs
+          that.type = session.prefs.type
         }, that)
     },
     getIds: function (scores) {
