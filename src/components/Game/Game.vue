@@ -37,8 +37,8 @@ export default {
       }
       const temp = Array.from(this.scores)
       temp.sort(function (a, b) {
-        const an = Number(a[1])
-        const bn = Number(b[1])
+        const an = Number(a[1][0])
+        const bn = Number(b[1][0])
         if (an < bn) {
           return -1
         }
@@ -52,12 +52,12 @@ export default {
       for (const i in temp) {
         const name = this.members[temp[i][0]]
         const score = temp[i][1]
-        if (preScore && score === preScore) {
+        if (preScore && score[0] === preScore) {
           result[result.length - 1][1].push(name)
         } else {
           result.push([score, [name]])
         }
-        preScore = score
+        preScore = score[0]
       }
       console.log(result)
       return result
@@ -279,8 +279,8 @@ export default {
           that.dealer = dealer
           const cards = session.prefs.cards[0]
           let aliases = session.prefs.aliases
-          if (aliases === null) {
-            aliases = that.cards
+          if (aliases === null || aliases === undefined) {
+            aliases = cards
           }
           const pairs = []
           for (var i = 0; i < cards.length; i++) {
