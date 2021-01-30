@@ -23,10 +23,6 @@
           <md-icon>assignment</md-icon>
         </div>
         <h3></h3>
-        <div id="code-contaienr" @click="copyToClipBoard(code)">
-          <h1>{{code}}</h1>
-          <md-icon>assignment</md-icon>
-        </div>
       </md-card-content>
       <md-card-actions>
         <router-link :to="{name: 'dealer', params: { code: code}, query: { is_dealer: true}}">
