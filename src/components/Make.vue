@@ -8,25 +8,31 @@
       <label>Change title if you want.</label>
       <md-input v-model="title"></md-input>
     </md-field>
-    <md-field>
-      <label>Select card style</label>
-      <md-select v-model="card_type">
-          <md-option value='numbers'>Numbers</md-option>
-          <md-option value='tshirt'>T-shirt</md-option>
-      </md-select>
-    </md-field>
-    <md-field v-if="card_type === 'tshirt'">
-      <label>Change card set if you want.</label>
-      <md-checkbox v-model="t_xs">XS</md-checkbox>
-      <md-checkbox v-model="t_s">S</md-checkbox>
-      <md-checkbox v-model="t_m">M</md-checkbox>
-      <md-checkbox v-model="t_l">L</md-checkbox>
-      <md-checkbox v-model="t_xl">XL</md-checkbox>
-    </md-field>
-    <md-field v-else>
-      <label>Change card set if you want.</label>
-      <md-input v-model="cards"></md-input>
-    </md-field>
+    <div class="md-layout md-gutter">
+      <div class="md-layout-item">
+        <md-field v-if="card_type === 'tshirt'">
+          <label>Change card set if you want.</label>
+          <md-checkbox v-model="t_xs">XS</md-checkbox>
+          <md-checkbox v-model="t_s">S</md-checkbox>
+          <md-checkbox v-model="t_m">M</md-checkbox>
+          <md-checkbox v-model="t_l">L</md-checkbox>
+          <md-checkbox v-model="t_xl">XL</md-checkbox>
+        </md-field>
+        <md-field v-else>
+          <label>Change card set if you want.</label>
+          <md-input v-model="cards"></md-input>
+        </md-field>
+      </div>
+      <div class="md-layout-item md-size-15  md-small-size-100">
+        <md-field>
+          <label>Select card style</label>
+          <md-select v-model="card_type">
+            <md-option value='numbers'>Numbers</md-option>
+            <md-option value='tshirt'>T-shirt</md-option>
+          </md-select>
+        </md-field>
+      </div>
+    </div>
     <md-button class="md-raised md-primary" @click="makeSession(dealer, title, cards, aliases, card_type)">make!</md-button>
     <md-card md-with-hover v-if="code">
       <md-card-header>
@@ -59,7 +65,7 @@ export default {
     return {
       dealer: null,
       code: null,
-      title: 'GAME',
+      title: 'POKER',
       cards: '1,2,3,5,8,13,100',
       aliases: null,
       card_type: 'numbers',
