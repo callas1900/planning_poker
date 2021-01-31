@@ -109,7 +109,7 @@ export default {
       const prefs = {
         title: title,
         cards: [this.cards.split(',')],
-        aliases: aliases
+        aliases: aliases,
         type: type
       }
       this.writeData(code, dealer, uuid, prefs)

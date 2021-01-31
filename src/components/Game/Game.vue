@@ -14,6 +14,7 @@ export default {
       playerId: null,
       dealer: null,
       cards: null,
+      type: null,
       selectedCard: null,
       members: [],
       scores: null,
@@ -304,5 +305,10 @@ export default {
 }
 </script>
 
+<style lang="scss">
+i.md-icon.md-theme-default.md-icon-image svg {
+  fill: var( --md-theme-default-primary);
+}
+</style>
 <style lang="scss" scoped src="./Game.css">
 </style>
