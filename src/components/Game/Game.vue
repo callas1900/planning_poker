@@ -14,6 +14,7 @@ export default {
       playerId: null,
       dealer: null,
       cards: null,
+      type: null,
       selectedCard: null,
       members: [],
       scores: null,
@@ -37,8 +38,8 @@ export default {
       }
       const temp = Array.from(this.scores)
       temp.sort(function (a, b) {
-        const an = Number(a[1])
-        const bn = Number(b[1])
+        const an = Number(a[1][0])
+        const bn = Number(b[1][0])
         if (an < bn) {
           return -1
         }
@@ -52,12 +53,12 @@ export default {
       for (const i in temp) {
         const name = this.members[temp[i][0]]
         const score = temp[i][1]
-        if (preScore && score === preScore) {
+        if (preScore && score[0] === preScore) {
           result[result.length - 1][1].push(name)
         } else {
           result.push([score, [name]])
         }
-        preScore = score
+        preScore = score[0]
       }
       console.log(result)
       return result
@@ -277,8 +278,17 @@ export default {
           const session = snapshot.val()
           const dealer = session && session.owner && session.owner[0]
           that.dealer = dealer
-          that.cards = session.prefs.cards[0]
-          // that.title = session.prefs.title
+          const cards = session.prefs.cards[0]
+          let aliases = session.prefs.aliases
+          if (aliases === null || aliases === undefined) {
+            aliases = cards
+          }
+          const pairs = []
+          for (var i = 0; i < cards.length; i++) {
+            pairs.push([cards[i], aliases[i]])
+          }
+          that.cards = pairs
+          that.type = session.prefs.type
         }, that)
     },
     getIds: function (scores) {
@@ -295,5 +305,10 @@ export default {
 }
 </script>
 
+<style lang="scss">
+i.md-icon.md-theme-default.md-icon-image svg {
+  fill: var( --md-theme-default-primary);
+}
+</style>
 <style lang="scss" scoped src="./Game.css">
 </style>

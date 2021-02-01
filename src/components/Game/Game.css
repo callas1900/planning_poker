@@ -1,5 +1,5 @@
 @import "~vue-material/src/components/MdLayout/mixins";
-.md-avatar-icon {
+.md-avatar {
   margin: 5px;
 }
 .number-card {
@@ -38,4 +38,7 @@ h2.md-headline {
   padding: 10px;
   display: inline-block;
   vertical-align: top;
+}
+.md-avatar.tshirt {
+  overflow: visible;
 }

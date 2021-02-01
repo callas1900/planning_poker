@@ -19,8 +19,12 @@
             <div id="result" v-if="waits.length == 0 && scores">
                 <h2 class="md-headline">result</h2>
                 <div class="md-layout md-alignment-center-left" v-for="r in result" :key="r[0]">
-                    <md-avatar class="md-avatar-icon md-large md-primary">
-                        <md-ripple>{{r[0]}}</md-ripple>
+                    <md-avatar class="md-large tshirt" v-if="type === 'tshirt'">
+                        <md-ripple>{{r[0][1]}}</md-ripple>
+                        <md-icon class="md-size-3x tshirt" md-src="/t-shirt.svg"></md-icon>
+                    </md-avatar>
+                    <md-avatar class="md-avatar-icon md-large md-primary" v-else>
+                        <md-ripple>{{r[0][1]}}</md-ripple>
                     </md-avatar>
                     <md-chip v-for="mem in r[1]" :key="mem">{{mem}}</md-chip>
                 </div>
@@ -82,7 +86,7 @@
                 <div class="md-layout md-gutter md-alignment-center">
                     <div v-for="card in cards" :key="card" @click="if (!isDecided) { selectedCard = card }">
                         <md-card md-with-hover :class="{ 'md-primary' : (selectedCard == card) }" class="number-card">
-                            <h1>{{card}}</h1>
+                            <h1>{{card[1]}}</h1>
                         </md-card>
                     </div>
                 </div>
