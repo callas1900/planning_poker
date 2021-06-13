@@ -16,33 +16,45 @@
     </div>
     <div id="center-pain" class="md-layout-item md-medium-size-70 md-small-size-100">
         <md-content id="display">
-            <div id="result" v-if="waits.length == 0 && scores">
+            <div id="result" v-if="isFinished">
                 <h2 class="md-headline">result</h2>
                 <div class="md-layout md-alignment-center-left" v-for="r in result" :key="r[0]">
-                    <md-avatar class="md-large tshirt" v-if="type === 'tshirt'">
+                    <md-avatar class="md-large" v-if="r[0] === dummyCode"></md-avatar>
+                    <md-avatar class="md-large tshirt" v-else-if="type === 'tshirt'">
                         <md-ripple>{{r[0][1]}}</md-ripple>
                         <md-icon class="md-size-3x tshirt" md-src="/t-shirt.svg"></md-icon>
                     </md-avatar>
                     <md-avatar class="md-avatar-icon md-large md-primary" v-else>
                         <md-ripple>{{r[0][1]}}</md-ripple>
                     </md-avatar>
-                    <md-chip v-for="mem in r[1]" :key="mem">{{mem}}</md-chip>
+                    <div v-for="mem in r[1]" :key="mem">
+                        <md-chip :class="{ 'md-disabled' : (r[0] === dummyCode) }">{{mem}}</md-chip>
+                    </div>
                 </div>
             </div>
-            <div v-else class="md-layout md-gutter md-alignment-top-center">
-                <div class="md-layout-item">
-                    <h2 class="md-headline">waiting</h2>
-                    <md-avatar class="md-avatar-icon md-large md-accent" v-for="w in waits" :key="w">
-                        <md-tooltip md-direction="top">{{w}}</md-tooltip>
-                        <md-ripple>{{w.slice(0, 2)}}</md-ripple>
-                    </md-avatar>
+            <div v-else>
+                <div class="md-layout md-gutter md-alignment-top-center">
+                    <div class="md-layout-item">
+                        <h2 class="md-headline">waiting</h2>
+                        <md-avatar class="md-avatar-icon md-large md-accent" v-for="w in waits" :key="w">
+                            <md-tooltip md-direction="top">{{w}}</md-tooltip>
+                            <md-ripple>{{w.slice(0, 2)}}</md-ripple>
+                        </md-avatar>
+                    </div>
+                    <div class="md-layout-item">
+                        <h2 class="md-headline">decided</h2>
+                        <md-avatar class="md-avatar-icon md-large md-primary" v-for="d in dones" :key="d">
+                            <md-tooltip md-direction="top">{{d}}</md-tooltip>
+                            <md-ripple>{{d.slice(0, 2)}}</md-ripple>
+                        </md-avatar>
+                    </div>
                 </div>
-                <div class="md-layout-item">
-                    <h2 class="md-headline">decided</h2>
-                    <md-avatar class="md-avatar-icon md-large md-primary" v-for="d in dones" :key="d">
-                        <md-tooltip md-direction="top">{{d}}</md-tooltip>
-                        <md-ripple>{{d.slice(0, 2)}}</md-ripple>
-                    </md-avatar>
+                <div class="md-layout md-gutter md-alignment-center-right" v-if="isDealer">
+                    <md-button class="md-raised md-accent md-layout-item md-size-10" v-on:click="showScore()">SHOW!</md-button>
+                    <div class="md-layout-item md-size-10">
+                        <md-icon>info</md-icon>
+                        <md-tooltip md-direction="top">Open forcibly all of the cards instad of remaining member.</md-tooltip>
+                    </div>
                 </div>
             </div>
         </md-content>
