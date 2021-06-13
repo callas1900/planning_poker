@@ -117,7 +117,7 @@ export default {
         }, that)
     },
     showScore: function () {
-      const waitIds = Array()
+      const waitIds = []
       for (const i in this.waits) {
         const waitMember = this.waits[i]
         const playerId = this.members.indexOf(waitMember)
