@@ -19,7 +19,8 @@ export default {
       members: [],
       scores: null,
       title: null,
-      kickTarget: null
+      kickTarget: null,
+      dummyCode: 'ymmud'
     }
   },
   computed: {
@@ -114,6 +115,19 @@ export default {
           console.log('Dealer reset game')
           that.sendMessage('Snake? Snake? SNAAAAAAAAKE!!!')
         }, that)
+    },
+    showScore: function () {
+      const waitIds = Array()
+      for (const i in this.waits) {
+        const waitMember = this.waits[i]
+        const playerId = this.members.indexOf(waitMember)
+        waitIds.push(playerId)
+        console.log(waitIds)
+      }
+      for (const i in waitIds) {
+        const playerId = waitIds[i]
+        this.updateScores(this.dummyCode, playerId, this.scores)
+      }
     },
     kickUser: function (kickTarget) {
       for (const i in this.members) {
