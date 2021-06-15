@@ -4,13 +4,13 @@
             <md-subheader>Dealer</md-subheader>
             <md-list-item>
                 <md-icon>account_box</md-icon>
-                <span>{{ dealer }}</span>
+                <span class="md-list-item-text">{{ dealer }}</span>
             </md-list-item>
             <md-divider></md-divider>
             <md-subheader>Member</md-subheader>
             <md-list-item v-for="member in members" :key="member">
-                <md-icon>account_box</md-icon>
-                <span>{{ member }}</span>
+                <md-icon :class="{ 'md-primary' : (player === member) }">account_box</md-icon>
+                <span class="md-list-item-text">{{ member }}</span>
             </md-list-item>
         </md-list>
     </div>
