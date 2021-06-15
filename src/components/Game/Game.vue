@@ -133,9 +133,9 @@ export default {
       for (const i in this.members) {
         const member = this.members[i]
         if (kickTarget === member) {
+          this.removeScoreById(i, this.scores)
           this.members.splice(i, 1)
           this.kickTarget = null
-          this.removeScoreById(i, this.scores)
           break
         }
       }
