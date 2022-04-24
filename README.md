@@ -18,8 +18,8 @@ firebase login
 
 ### for production
 
+`npm install` request python2
 ```shell
-# install dependencies
 npm install
 
 # build for production with minification
@@ -32,7 +32,6 @@ firebase deploy
 ### for local development
 
 ```shell
-# install dependencies
 npm install
 
 # build for development with minification
